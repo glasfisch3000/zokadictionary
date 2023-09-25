@@ -1,0 +1,23 @@
+{
+  "name": "zokadictionary",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glasfisch3000/zokadictionary.git"
+  },
+  "author": "Jakob Danckwerts",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/glasfisch3000/zokadictionary/issues"
+  },
+  "homepage": "https://github.com/glasfisch3000/zokadictionary#readme",
+  "dependencies": {
+    "sqlite": "^5.0.1",
+    "sqlite-async": "^1.2.0"
+  }
+}
