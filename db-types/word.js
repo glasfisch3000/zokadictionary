@@ -1,22 +1,29 @@
 let baseModule = require("./base.js")
 let patternModule = require("./pattern.js")
+let classModule = require("./class.js")
 
 class Word {
-  constructor(id, string, base, pattern) {
+  constructor(id, string, base, pattern, wordClass) {
     this.id = id
     this.string = string
     this.base = base
     this.pattern = pattern
+    this.class = wordClass
   }
 
   async update(db) {
-    this.string = await db.get("SELECT string FROM Word WHERE id = ?", [this.id]) || null
+    let data = await db.get("SELECT * FROM Word WHERE id = ?", [this.id])
 
-    let baseID = await db.get("SELECT base FROM Word WHERE id = ?", [this.id])
-    if(baseID) this.base = await baseModule.get(db, baseID)
+    this.string = data.string || null
 
-    let patternID = await db.get("SELECT pattern FROM Word WHERE id = ?", [this.id])
-    if(patternID) this.pattern = await patternModule.get(db, patternID)
+    if(data.base) this.base = await baseModule.get(db, data.base)
+    else this.base = null
+
+    if(data.pattern) this.pattern = await patternModule.get(db, data.pattern)
+    else this.pattern = null
+
+    if(data.class) this.class = await classModule.get(db, data.class)
+    else this.class = null
   }
 
   construct() {
@@ -38,7 +45,7 @@ class Word {
 module.exports.name = "word"
 
 module.exports.setup = async (db) => {
-  await db.run("CREATE TABLE IF NOT EXISTS Word (id INTEGER PRIMARY KEY AUTOINCREMENT, string TEXT, base TEXT, pattern TEXT, FOREIGN KEY(base) REFERENCES Base, FOREIGN KEY(pattern) REFERENCES Pattern)")
+  await db.run("CREATE TABLE IF NOT EXISTS Word (id INTEGER PRIMARY KEY AUTOINCREMENT, string TEXT, base TEXT, pattern TEXT, class TEXT, FOREIGN KEY(base) REFERENCES Base, FOREIGN KEY(pattern) REFERENCES Pattern, FOREIGN KEY(class) REFERENCES Class)")
   console.log("[db-setup][word] table Word exists")
 }
 
@@ -47,21 +54,22 @@ module.exports.get = async (db, id) => {
   if(!query) return query
   let { string, base, pattern } = query
 
-  var result = new Word(id, string, base, null)
+  var result = new Word(id, string, base, null, null)
 
   //if(base) result.base = await baseModule.get(db, base)
   if(pattern) result.pattern = await patternModule.get(db, pattern)
+  if(query.class) result.class = await classModule.get(db, query.class)
 
   return result
 }
 
-module.exports.create = async (db, string, base, pattern) => {
-  if(base) {
-    if(pattern) return (await db.run("INSERT INTO Word (string, base, pattern) VALUES (?, ?, ?)", [string, base, pattern])).lastID
-    else return (await db.run("INSERT INTO Word (string, base) VALUES (?, ?)", [string, base])).lastID
-  } else if(pattern) {
-    return (await db.run("INSERT INTO Word (string, pattern) VALUES (?, ?)", [string, pattern])).lastID
-  } else {
-    return (await db.run("INSERT INTO Word (string) VALUES (?)", [string])).lastID
-  }
+module.exports.create = async (db, string, base, pattern, wordClass) => {
+  let id = (await db.run("INSERT INTO Word (string, base, pattern, class) VALUES (?, ?, ?, ?)", [string || null, null, null, null])).lastID
+  if(!id) return false
+
+  if(base) await db.run("UPDATE Word SET base = ? WHERE id = ?", [base, id])
+  if(pattern) await db.run("UPDATE Word SET pattern = ? WHERE id = ?", [pattern, id])
+  if(wordClass) await db.run("UPDATE Word SET class = ? WHERE id = ?", [wordClass, id])
+
+  return id
 }

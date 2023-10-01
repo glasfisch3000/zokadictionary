@@ -25,7 +25,7 @@ require("./database.js")().then(data => { // actual database pointer
           res.status(404).send("")
         }
       } catch(error) {
-        console.log("[server] [get-word] " + error)
+        console.log("[server][get-word] " + error)
         res.status(500).send("")
       }
     } else {
@@ -40,10 +40,28 @@ require("./database.js")().then(data => { // actual database pointer
         if(word) {
           res.send(JSON.stringify(word))
         } else {
+          res.status(500).send("")
+        }
+      } catch(error) {
+        console.log("[server][post-word] " + error)
+        res.status(500).send("")
+      }
+    } else {
+      res.status(400).send("")
+    }
+  })
+
+  logGet("/dictionary-api/base", ["id"], async (res, query) => {
+    if(query.id) {
+      try {
+        let base = await db.base.get(data, query.id)
+        if(base) {
+          res.send(JSON.stringify(base))
+        } else {
           res.status(404).send("")
         }
       } catch(error) {
-        console.log("[server] [post-word] " + error)
+        console.log("[server][get-base] " + error)
         res.status(500).send("")
       }
     } else {
@@ -58,10 +76,28 @@ require("./database.js")().then(data => { // actual database pointer
         if(base) {
           res.send(JSON.stringify(base))
         } else {
+          res.status(500).send("")
+        }
+      } catch(error) {
+        console.log("[server][post-base] " + error)
+        res.status(500).send("")
+      }
+    } else {
+      res.status(400).send("")
+    }
+  })
+
+  logGet("/dictionary-api/pattern", ["id"], async (res, query) => {
+    if(query.id) {
+      try {
+        let pattern = await db.pattern.get(data, query.id)
+        if(pattern) {
+          res.send(JSON.stringify(pattern))
+        } else {
           res.status(404).send("")
         }
       } catch(error) {
-        console.log("[server] [post-base] " + error)
+        console.log("[server][get-pattern] " + error)
         res.status(500).send("")
       }
     } else {
@@ -76,10 +112,46 @@ require("./database.js")().then(data => { // actual database pointer
         if(pattern) {
           res.send(JSON.stringify(pattern))
         } else {
+          res.status(500).send("")
+        }
+      } catch(error) {
+        console.log("[server][post-pattern] " + error)
+        res.status(500).send("")
+      }
+    } else {
+      res.status(400).send("")
+    }
+  })
+
+  logGet("/dictionary-api/class", ["id"], async (res, query) => {
+    if(query.id) {
+      try {
+        let wordClass = await db.class.get(data, query.id)
+        if(wordClass) {
+          res.send(JSON.stringify(wordClass))
+        } else {
           res.status(404).send("")
         }
       } catch(error) {
-        console.log("[server] [post-pattern] " + error)
+        console.log("[server][get-class] " + error)
+        res.status(500).send("")
+      }
+    } else {
+      res.status(400).send("")
+    }
+  })
+
+  logGet("/dictionary-api/post-class", ["id", "title"], async (res, query) => {
+    if(query.id && query.title) {
+      try {
+        let wordClass = await db.class.create(data, query.id, query.title)
+        if(wordClass) {
+          res.send(JSON.stringify(wordClass))
+        } else {
+          res.status(500).send("")
+        }
+      } catch(error) {
+        console.log("[server][post-class] " + error)
         res.status(500).send("")
       }
     } else {
