@@ -6,9 +6,9 @@ module.exports.setup = async (db) => {
 }
 
 module.exports.get = async (db, id) => {
-  return await db.get("SELECT text FROM Base WHERE text = ?", [id])
+  return await db.get("SELECT * FROM Base WHERE text=?", [id])
 }
 
 module.exports.create = async (db, text) => {
-  await db.run("INSERT INTO Base (text) VALUES (?)", [text])
+  return (await db.run("INSERT INTO Base (text) VALUES (?)", [text])).lastID
 }

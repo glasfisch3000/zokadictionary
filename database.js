@@ -1,11 +1,12 @@
-const sqlite = require("sqlite-async")
 const fs = require("fs").promises
 const dbTypes = require("./db-types.js")
 
-const dbFile = "./database.db"
+const dbFile = "./data/database.db"
 
 async function init() {
   try {
+    let sqlite = (await import("sqlite-async")).Database
+
     let db = await sqlite.open(dbFile)
     console.log("[db-setup] successfully connected to database")
 

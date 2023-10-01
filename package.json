@@ -2,7 +2,7 @@
   "name": "zokadictionary",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/glasfisch3000/zokadictionary#readme",
   "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
     "sqlite": "^5.0.1",
     "sqlite-async": "^1.2.0"
   }

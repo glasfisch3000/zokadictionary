@@ -2,7 +2,7 @@ let baseModule = require("./base.js")
 let patternModule = require("./pattern.js")
 
 class Word {
-  init(id, string, base, pattern) {
+  constructor(id, string, base, pattern) {
     this.id = id
     this.string = string
     this.base = base
@@ -22,15 +22,15 @@ class Word {
   construct() {
     if(this.string) return this.string
 
-    var patternString = "%"
+    var patternString = "$"
 
     var pattern = this.pattern
     while(pattern) {
-      patternString.replaceAll("%", pattern.patternString)
+      patternString = patternString.replaceAll("$", pattern.patternString)
       pattern = pattern.parent
     }
 
-    patternString.replaceAll("%", this.base)
+    patternString = patternString.replaceAll("$", this.base)
     return patternString
   }
 }
@@ -43,23 +43,25 @@ module.exports.setup = async (db) => {
 }
 
 module.exports.get = async (db, id) => {
-  let { id, string, base, pattern } = await db.get("SELECT * FROM Word WHERE id = ?", [id])
+  let query = await db.get("SELECT * FROM Word WHERE id = ?", [id])
+  if(!query) return query
+  let { string, base, pattern } = query
 
-  var result = new Word(id, string, null, null)
+  var result = new Word(id, string, base, null)
 
-  if(base) result.base = baseModule.get(db, base)
-  if(pattern) result.pattern = patternModule.get(db, pattern)
+  //if(base) result.base = await baseModule.get(db, base)
+  if(pattern) result.pattern = await patternModule.get(db, pattern)
 
   return result
 }
 
 module.exports.create = async (db, string, base, pattern) => {
   if(base) {
-    if(pattern) await db.run("INSERT INTO Word (string, base, pattern) VALUES (?, ?, ?)", [string, base, pattern])
-    else await db.run("INSERT INTO Word (string, base) VALUES (?, ?)", [string, base])
+    if(pattern) return (await db.run("INSERT INTO Word (string, base, pattern) VALUES (?, ?, ?)", [string, base, pattern])).lastID
+    else return (await db.run("INSERT INTO Word (string, base) VALUES (?, ?)", [string, base])).lastID
   } else if(pattern) {
-    await db.run("INSERT INTO Word (string, pattern) VALUES (?, ?)", [string, pattern])
+    return (await db.run("INSERT INTO Word (string, pattern) VALUES (?, ?)", [string, pattern])).lastID
   } else {
-    await db.run("INSERT INTO Word (string) VALUES (?)", [string])
+    return (await db.run("INSERT INTO Word (string) VALUES (?)", [string])).lastID
   }
 }

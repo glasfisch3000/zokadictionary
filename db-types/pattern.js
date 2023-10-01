@@ -1,5 +1,5 @@
 class Pattern {
-  init(id, title, pattern, parent) {
+  constructor(id, title, pattern, parent) {
     this.id = id
     this.title = title
     this.patternString = pattern
@@ -24,17 +24,17 @@ module.exports.setup = async (db) => {
 }
 
 module.exports.get = async (db, id) => {
-  let { id, title, pattern, parent } = await db.get("SELECT * FROM Pattern WHERE id = ?", [id])
+  let { title, pattern, parent } = await db.get("SELECT * FROM Pattern WHERE id = ?", [id])
 
   var result = new Pattern(id, title, pattern, null)
   if(parent) {
-    result.parent = module.exports.get(db, parent)
+    result.parent = await module.exports.get(db, parent)
   }
 
   return result
 }
 
 module.exports.create = async (db, id, title, pattern, parent) => {
-  if(parent) await db.run("INSERT INTO Pattern (id, title, pattern, parent) VALUES (?, ?, ?, ?)", [id, title, pattern, parent])
-  else await db.run("INSERT INTO Pattern (id, title, pattern) VALUES (?, ?, ?)", [id, title, pattern])
+  if(parent) return (await db.run("INSERT INTO Pattern (id, title, pattern, parent) VALUES (?, ?, ?, ?)", [id, title, pattern, parent])).lastID
+  else return (await db.run("INSERT INTO Pattern (id, title, pattern) VALUES (?, ?, ?)", [id, title, pattern])).lastID
 }
