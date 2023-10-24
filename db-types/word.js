@@ -51,7 +51,7 @@ module.exports.setup = async (db) => {
 
 module.exports.get = async (db, id) => {
   let query = await db.get("SELECT * FROM Word WHERE id = ?", [id])
-  if(!query) return query
+  if(!query) return false
   let { string, base, pattern } = query
 
   var result = new Word(id, string, base, null, null)
@@ -61,6 +61,24 @@ module.exports.get = async (db, id) => {
   if(query.class) result.class = await classModule.get(db, query.class)
 
   return result
+}
+
+module.exports.getAll = async (db) => {
+  let query = await db.all("SELECT * FROM Word")
+  if(!query) return false
+
+  var results = []
+
+  for(var item of query) {
+    var word = new Word(item.id, item.string, item.base, null, null)
+
+    if(item.pattern) word.pattern = await patternModule.get(db, item.pattern)
+    if(item.class) word.class = await classModule.get(db, item.class)
+
+    results.push(word)
+  }
+
+  return results
 }
 
 module.exports.create = async (db, string, base, pattern, wordClass) => {

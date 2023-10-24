@@ -5,12 +5,60 @@ server.use(require("body-parser").urlencoded({ extended: false }))
 const http = require("http").Server(server)
 const port = 80
 
+const client = require("./client.js")
+
 // collection of database functions
 const db = require("./db-types.js")
 
 require("./database.js")().then(data => { // actual database pointer
-  logGet("/", null, (res) => {
-    res.redirect("/dictionary")
+  logGet("/", null, async (res) => {
+    res.send(await client("index.html"))
+  })
+
+  logGet("/main.css", null, async (res) => {
+    res.sendFile(__dirname + "/client/main.css")
+  })
+
+  logGet("/dictionary", null, async (res) => {
+    res.send(await client("dictionary.html"))
+  })
+
+  logGet("/dictionary.css", null, async (res) => {
+    res.sendFile(__dirname + "/client/dictionary.css")
+  })
+
+  logGet("/dictionary.js", null, async (res) => {
+    res.sendFile(__dirname + "/client/dictionary.js")
+  })
+
+  logGet("/new-word", null, async (res) => {
+    res.send(await client("new-word.html"))
+  })
+
+  logGet("/main-form.css", null, async (res) => {
+    res.sendFile(__dirname + "/client/main-form.css")
+  })
+
+  logGet("/new-word.js", null, async (res) => {
+    res.sendFile(__dirname + "/client/new-word.js")
+  })
+
+  logGet("/dictionary-api/all-words", null, async (res) => {
+    try {
+      var words = await db.word.getAll(data)
+      if(words) {
+        for(var word of words) {
+          word.constructed = word.construct()
+        }
+        res.send(JSON.stringify(words))
+        return
+      } else {
+        res.status(404).send("")
+      }
+    } catch(error) {
+      console.log("[server][get-all-words] " + error)
+      res.status(500).send("")
+    }
   })
 
   logGet("/dictionary-api/word", ["id"], async (res, query) => {
@@ -51,6 +99,20 @@ require("./database.js")().then(data => { // actual database pointer
     }
   })
 
+  logGet("/dictionary-api/all-bases", null, async (res) => {
+    try {
+      let bases = await db.base.getAll(data)
+      if(bases) {
+        res.send(JSON.stringify(bases))
+      } else {
+        res.status(404).send("")
+      }
+    } catch(error) {
+      console.log("[server][get-all-bases] " + error)
+      res.status(500).send("")
+    }
+  })
+
   logGet("/dictionary-api/base", ["id"], async (res, query) => {
     if(query.id) {
       try {
@@ -87,6 +149,20 @@ require("./database.js")().then(data => { // actual database pointer
     }
   })
 
+  logGet("/dictionary-api/all-patterns", null, async (res) => {
+    try {
+      let patterns = await db.pattern.getAll(data)
+      if(patterns) {
+        res.send(JSON.stringify(patterns))
+      } else {
+        res.status(404).send("")
+      }
+    } catch(error) {
+      console.log("[server][get-all-patterns] " + error)
+      res.status(500).send("")
+    }
+  })
+
   logGet("/dictionary-api/pattern", ["id"], async (res, query) => {
     if(query.id) {
       try {
@@ -120,6 +196,20 @@ require("./database.js")().then(data => { // actual database pointer
       }
     } else {
       res.status(400).send("")
+    }
+  })
+
+  logGet("/dictionary-api/all-classes", null, async (res) => {
+    try {
+      let classes = await db.class.getAll(data)
+      if(classes) {
+        res.send(JSON.stringify(classes))
+      } else {
+        res.status(404).send("")
+      }
+    } catch(error) {
+      console.log("[server][get-all-classes] " + error)
+      res.status(500).send("")
     }
   })
 

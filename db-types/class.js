@@ -18,11 +18,26 @@ module.exports.setup = async (db) => {
 
 module.exports.get = async (db, id) => {
   let query = await db.get("SELECT * FROM Class WHERE id = ?", [id])
-  if(!query) return query
+  if(!query) return false
 
   var result = new Class(query.id, query.title)
 
   return result
+}
+
+module.exports.getAll = async (db, id) => {
+  let query = await db.all("SELECT * FROM Class")
+  if(!query) return false
+
+  var results = []
+  for(let item of query) {
+    if(!item) continue
+
+    let wordClass = new Class(item.id, item.title)
+    results.push(wordClass)
+  }
+
+  return results
 }
 
 module.exports.create = async (db, id, title) => {

@@ -9,6 +9,20 @@ module.exports.get = async (db, id) => {
   return (await db.get("SELECT * FROM Base WHERE id=?", [id])).id
 }
 
+module.exports.getAll = async (db) => {
+  let query = await db.all("SELECT * FROM Base")
+  if(!query) return false
+
+  var results = []
+
+  for(var item of query) {
+    var base = item.id
+    if(base) results.push(base)
+  }
+
+  return results
+}
+
 module.exports.create = async (db, id) => {
   let query = await db.run("INSERT INTO Base (id) VALUES (?)", [id])
   if(!query) return false

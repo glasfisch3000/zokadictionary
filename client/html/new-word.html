@@ -1,0 +1,60 @@
+<html>
+<head>
+    <link rel=stylesheet type="text/css" href="/main.css">
+    <link rel=stylesheet type="text/css" href="/main-form.css">
+    <title>Add new word</title>
+</head>
+<body>
+<!-- $header -->
+
+  <div class="main-form-container">
+    <div class="main-form">
+      <div class="main-form-title">
+        Add new word
+      </div>
+
+      <form>
+        <div class="form-section">
+          <div class="input-container">
+            <div class="input-label">
+              Word Base:
+            </div>
+            <label for="base"> Word Base </label>
+            <input type="text" name="base" id="input-base" class="input" value="" placeholder="Base">
+          </div>
+
+          <div class="input-container">
+            <div class="input-label">
+              Word Pattern:
+            </div>
+            <label for="pattern"> Word Pattern </label>
+            <select name="pattern" id="input-pattern" class="input"></select>
+          </div>
+
+          <div class="input-container">
+            <div class="input-label">
+              Word Class:
+            </div>
+            <label for="class"> Word Class </label>
+            <select name="class" id="input-class" class="input"></select>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="input-container">
+            <div class="input-label">
+              Word Override (optional):
+            </div>
+            <label for="string"> Word Override </label>
+            <input type="text" name="string" id="input-string" class="input" value="" placeholder="Override string">
+          </div>
+        </div>
+
+        <input type="submit" value="Submit" id="input-submit" class="form-submit">
+      </form>
+    </div>
+  </div>
+
+  <script src="/new-word.js"></script>
+</body>
+</html>

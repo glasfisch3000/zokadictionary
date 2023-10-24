@@ -41,6 +41,24 @@ module.exports.get = async (db, id) => {
   return result
 }
 
+module.exports.getAll = async (db) => {
+  let query = await db.all("SELECT * FROM Pattern")
+  if(!query) return false
+
+  var results = []
+
+  for(var item of query) {
+    var pattern = new Pattern(item.id, item.title, item.pattern, null, null)
+
+    if(item.parent) pattern.parent = await module.exports.get(db, item.parent)
+    if(item.class) pattern.class = await classModule.get(db, item.class)
+
+    results.push(pattern)
+  }
+
+  return results
+}
+
 module.exports.create = async (db, id, title, pattern, parent, wordClass) => {
   let query = await db.run("INSERT INTO Pattern (id, title, pattern, parent, class) VALUES (?, ?, ?, ?, ?)", [id, title, pattern, null, null])
   if(!query) return false

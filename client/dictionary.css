@@ -1,0 +1,77 @@
+#dictionary-container {
+  margin: 10px;
+}
+
+.words-section {
+  margin: 10px;
+}
+
+.words-section-title {
+  font-weight: bold;
+  font-size: 150%;
+}
+
+.words-section-empty .words-section-title {
+  color: #888;
+}
+
+.word {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #555;
+  border-radius: 10px;
+
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 8px;
+  padding-bottom: 10px;
+}
+
+.highlighted {
+  animation: highlighting;
+  animation-duration: 1s;
+}
+
+@keyframes highlighting {
+  0% { background-color: inherit; }
+  10% { background-color: var(--accent-color); }
+  100% { background-color: inherit; }
+}
+
+.word-title {
+  font-size: 120%;
+  cursor: pointer;
+}
+
+.word[expanded=true] .word-details {
+  display: block;
+}
+
+.word[expanded=false] .word-details {
+  display: none;
+}
+
+.word-details-patterns-box {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.word-details-patterns-box-index {
+  font-weight: normal;
+  font-family: "Courier";
+  font-size: 110%;
+}
+
+.word-details-patterns-box-word {
+  margin-left: 3px;
+  border-radius: 6px;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  background: #444;
+}
+
+.word-details-patterns-box-word a {
+  color: inherit;
+}
