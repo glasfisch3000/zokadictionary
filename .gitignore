@@ -126,7 +126,9 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# macOS shit
 .DS_Store
 */.DS_Store
 
-data/*
+# data
+data
