@@ -1,4 +1,5 @@
 let dictionaryContainer = document.getElementById("dictionary-container")
+let fetchedWords = []
 
 fetch("/dictionary-api/all-words", { method: "GET" }) // get list of all words from server
   .then((response) => response.json()) // convert to usable object
@@ -10,15 +11,17 @@ fetch("/dictionary-api/all-words", { method: "GET" }) // get list of all words f
       return
     }
 
+    fetchedWords = words
+
     // for every entry provided by the server, create a div box with information about it
     let wordElements = []
-    for(var word of words) {
+    for(const word of words) {
       // expandable box with information about the entry
       let element = document.createElement("div")
       element.id = "word-" + word.id
       element.classList.add("word")
       element.setAttribute("expanded", false)
-      element.finalWord = word.string || word.constructed
+      element.finalWord = word.string
       wordElements.push(element)
 
 
@@ -35,15 +38,15 @@ fetch("/dictionary-api/all-words", { method: "GET" }) // get list of all words f
       let value = document.createElement("div")
       value.id = element.id + "-value"
       value.classList.add("word-value")
-      value.innerHTML = wordConstructMarkdown(word)
+      value.innerHTML = word.string
       title.appendChild(value)
 
       // the word's type
       let type = document.createElement("div")
       type.id = element.id + "-type"
       type.classList.add("word-type")
-      type.wordType = word.type || "other"
-      type.innerHTML = word.type || "other"
+      type.setAttribute("wordType", word.type || "none")
+      type.innerHTML = word.type || "none"
       title.appendChild(type)
 
 
@@ -53,11 +56,31 @@ fetch("/dictionary-api/all-words", { method: "GET" }) // get list of all words f
       details.classList.add("word-details")
       element.appendChild(details)
 
+      // a list of all the translations
+      if(word.translations && word.translations.length > 0) {
+        let translations = document.createElement("div")
+        translations.id = element.id + "-translations"
+        translations.classList.add("word-translations")
+        details.appendChild(translations)
+
+        for(const index in word.translations) {
+          const translation = word.translations[index]
+          if(!translation) continue
+
+          let item = document.createElement("div")
+          item.id = element.id + `-translation-${index}`
+          item.classList.add("word-translation")
+          item.innerHTML = translation
+          translations.appendChild(item)
+        }
+      }
+
       // a description of the word and it's meaning
       let description = document.createElement("div")
       description.id = element.id + "-description"
       description.classList.add("word-description")
-      description.innerHTML = word.description ? `${word.description}` : "no description"
+      description.innerHTML = word.description
+      if(!word.description) description.style.display = "none"
       details.appendChild(description)
 
       // a list of all the linked entries
@@ -74,6 +97,7 @@ fetch("/dictionary-api/all-words", { method: "GET" }) // get list of all words f
           item.id = element.id + `-reference-${reference.id}`
           item.classList.add("word-reference")
           item.innerHTML = reference.string
+          item.setAttribute("wordType", reference.type || "none")
           item.href = `#word-${reference.id}`
           item.onclick = () => { wordLinkClick(reference.id) }
           references.appendChild(item)
@@ -81,47 +105,33 @@ fetch("/dictionary-api/all-words", { method: "GET" }) // get list of all words f
       }
     }
 
-    var letters = ["a", "e", "i", "o", "u", "m", "v", "b", "l", "n", "z", "zh", "d", "dh", "y", "r", "k"]
+    let letters = ["a", "i", "u", "e", "o", "m", "v", "b", "l", "n", "z", "zh", "d", "dh", "y", "r", "k"]
 
-    var results = {}
-    for(let wordElement of wordElements) {
+    let results = {}
+    letters.reverse()
+    for(const wordElement of wordElements) {
       sortWordElement(wordElement, letters, results)
     }
-
+    letters.reverse()
     letters.push("other")
 
-    for(let letter of letters) {
-      var elements = results[letter] || []
-      elements.sort()
+    for(const letter of letters) {
+      let elements = results[letter] || []
 
-      let displayLetter = letter.substring(0, 1).toUpperCase() + letter.substring(1, letter.length)
+      const displayLetter = letter.substring(0, 1).toUpperCase() + letter.substring(1, letter.length)
 
-      var section = document.createElement("div")
+      let section = document.createElement("div")
       section.id = "words-section-" + letter
       section.classList.add("words-section")
       if(!(elements.length > 0)) section.classList.add("words-section-empty")
       section.innerHTML = `<div id="${section.id}-title" class="words-section-title">${displayLetter}</div>`
       dictionaryContainer.appendChild(section)
 
-      for(let element of elements) {
+      for(const element of elements) {
         section.appendChild(element)
       }
     }
   });
-
-function wordConstructMarkdown(word) {
-  if(word.string) return word.string
-
-  var result = "$"
-
-  var pattern = word.pattern
-  while(pattern) {
-    result = result.replaceAll("$", pattern.patternString)
-    pattern = pattern.parent
-  }
-
-  return result.replaceAll("$", "<b>" + word.base + "</b>")
-}
 
 function wordLinkClick(linkedID) {
   let element = document.getElementById("word-" + linkedID)
@@ -143,4 +153,128 @@ function sortWordElement(wordElement, letters, results) {
 
   if(!results.other) results.other = []
   results.other.push(wordElement)
+}
+
+
+let searchField = document.getElementById("header-search")
+let searchContainer = document.getElementById("search-container")
+searchField.oninput = () => {
+  const searchValue = searchField.value
+  if(!searchValue) {
+    dictionaryContainer.style.display = "block"
+    searchContainer.style.display = "none"
+    searchContainer.innerHTML = ""
+    return
+  }
+
+  dictionaryContainer.style.display = "none"
+  searchContainer.style.display = "block"
+  searchContainer.innerHTML = ""
+
+  let searchedWords = []
+  for(const word of fetchedWords) {
+    const match = searchMatch(searchValue, word)
+    if(!match) continue
+
+    searchedWords.push({
+      id: word.id,
+      string: word.string,
+      type: word.type,
+      translations: word.translations,
+      match: {
+        pattern: match.pattern,
+        i: match.i,
+        index: match.index
+      }
+    })
+  }
+
+  searchedWords.sort((a, b) => {
+    if(a.match.index < b.match.index) return -1
+    if(a.match.index > b.match.index) return 1
+    if(a.match.type == "string" && b.match.type == "translation") return -1
+    if(a.match.type == "translation" && b.match.type == "string") return 1
+    if(a.string < b.string) return -1
+    return 1
+  })
+
+  for(const word of searchedWords) {
+    // expandable box with information about the entry
+    let element = document.createElement("div")
+    element.id = "search-word-" + word.id
+    element.classList.add("search-word")
+    searchContainer.appendChild(element)
+
+    element.onclick = (event) => {
+      searchField.value = ""
+      
+      dictionaryContainer.style.display = "block"
+      searchContainer.style.display = "none"
+      searchContainer.innerHTML = ""
+
+      wordLinkClick(word.id)
+    }
+
+    // the word itself
+    let value = document.createElement("div")
+    value.id = element.id + "-value"
+    value.classList.add("search-word-value")
+    element.appendChild(value)
+
+    if(word.match.pattern == "string") {
+      value.innerHTML = word.string.substring(0, word.match.index) + `<span class="search-word-match">${searchValue}</span>` + word.string.substring(word.match.index + searchValue.length, word.string.length)
+    } else {
+      value.innerHTML = word.string
+    }
+
+    // the word's type
+    let type = document.createElement("div")
+    type.id = element.id + "-type"
+    type.classList.add("search-word-type")
+    type.setAttribute("wordType", word.type || "none")
+    type.innerHTML = word.type || "none"
+    element.appendChild(type)
+
+    // a list of all the translations
+    let translations = document.createElement("div")
+    translations.id = element.id + "-translations"
+    translations.classList.add("search-word-translations")
+    element.appendChild(translations)
+
+    for(const index in word.translations) {
+      const translation = word.translations[index]
+      if(!translation) continue
+
+      let item = document.createElement("span")
+      item.id = element.id + `-translation-${index}`
+      item.classList.add("search-word-translation")
+      translations.appendChild(item)
+
+      if(word.match.pattern == "translation" && word.match.i == index) {
+        item.innerHTML = translation.substring(0, word.match.index) + `<span class="search-word-match">${searchValue}</span>` + translation.substring(word.match.index + searchValue.length, translation.length)
+      } else {
+        item.innerHTML = translation
+      }
+    }
+  }
+}
+
+function searchMatch(search, word) {
+  let result = null
+
+  const matchIndex = word.string.indexOf(search)
+  if(matchIndex != -1) result = { pattern: "string", index: matchIndex }
+
+  for(const i in word.translations) {
+    const translation = word.translations[i]
+
+    const matchIndex = translation.indexOf(search)
+    if(matchIndex != -1) {
+      if(!result || result.matchIndex > matchIndex) {
+        result = { pattern: "translation", i: i, index: matchIndex }
+      }
+    }
+  }
+
+  return result
 }

@@ -12,11 +12,6 @@ module.exports.getAllWords = async (data, logger) => {
       return null
     }
 
-    log("constructing words")
-    for(var word of words) {
-      word.constructed = word.construct()
-    }
-
     return words
   } catch(error) {
     err(error)
@@ -35,9 +30,6 @@ module.exports.getWord = async (data, logger, id) => {
       err("no content found")
       return null
     }
-
-    log("constructing word")
-    word.constructed = word.construct()
 
     return word
   } catch(error) {

@@ -26,6 +26,16 @@ module.exports.getFile = (path, file, logger) => {
   })
 }
 
+module.exports.getRedirect = (path, newPath, logger) => {
+  server.get(path, (req, res) => {
+    const { log, err, childLogger } = logger(`session-${sessionID()}`)
+
+    log(`GET request: "${path}"`)
+    log(`sending redirect: "${newPath}"`)
+    res.redirect(newPath)
+  })
+}
+
 module.exports.post = (path, logger, callback) => {
   server.post(path, (req, res) => {
     const { log, err, childLogger } = logger(`session-${sessionID()}`)

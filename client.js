@@ -1,14 +1,11 @@
 const fs = require("fs").promises
 
-module.exports = async (dir, context) => {
+module.exports = async (dir) => {
   try {
     let file = new String(await fs.readFile(`./client/html/${dir}`))
     let header = await fs.readFile("./client/header.html")
 
-    let contextScript = "<script> const documentContext = " + JSON.stringify(context) + "; </script>"
-
     file = file.replaceAll("<!-- $header -->", header)
-    file = file.replaceAll("<!-- $context-script -->", contextScript)
 
     return file
   } catch(error) {

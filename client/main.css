@@ -52,33 +52,4 @@ header {
 
 .header-trailing {
   margin-left: auto;
-  width: 50px;
-}
-
-.menu-button-popup {
-  right: 0px;
-  display: none;
-  background: #222;
-}
-
-div:hover .menu-button-popup {
-  display: block;
-}
-
-.popup-button {
-  margin: 0px;
-  padding: 12px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  width: 100%;
-
-  font-weight: 550;
-  font-size: 120%;
-  text-decoration: none;
-  color: inherit;
-  background: inherit;
-}
-
-.popup-button:hover {
-  background: #383838;
 }

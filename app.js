@@ -12,31 +12,13 @@ require("./database.js")(childLogger).then(data => { // actual database pointer
   server.getFile("/main.css", __dirname + "/client/main.css", childLogger)
   server.getFile("/dictionary.css", __dirname + "/client/dictionary.css", childLogger)
   server.getFile("/dictionary.js", __dirname + "/client/dictionary.js", childLogger)
-  server.getFile("/main-form.css", __dirname + "/client/main-form.css", childLogger)
-  server.getFile("/new-word.js", __dirname + "/client/new-word.js", childLogger)
 
-  server.get("/", childLogger, async (req, res, log, err) => {
-    log(`sending client file: "index.html"`)
-    try {
-      res.send(await client("index.html"))
-    } catch(error) {
-      err(error)
-    }
-  })
+  server.getRedirect("/", "/dictionary", childLogger)
 
   server.get("/dictionary", childLogger, async (req, res) => {
     log(`sending client file: "dictionary.html"`)
     try {
       res.send(await client("dictionary.html"))
-    } catch(error) {
-      err(error)
-    }
-  })
-
-  server.get("/new-word", childLogger, async (req, res, log, err) => {
-    log(`sending client file: "new-word.html"`)
-    try {
-      res.send(await client("new-word.html"))
     } catch(error) {
       err(error)
     }

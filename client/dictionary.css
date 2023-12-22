@@ -1,6 +1,33 @@
+.header-search {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  margin-right: 6px;
+
+  border: 1px solid #ddd;
+  border-radius: 10px;
+
+  padding: 10px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+
+  width: 200px;
+
+  text-decoration: none;
+  font-size: 120%;
+  color: inherit;
+  background: inherit;
+}
+
+
 #dictionary-container {
   margin: 10px;
 }
+
+#search-container {
+  margin: 20px;
+  display: none;
+}
+
 
 .words-section {
   margin: 10px;
@@ -14,6 +41,7 @@
 .words-section-empty .words-section-title {
   color: #888;
 }
+
 
 .word {
   margin-top: 10px;
@@ -38,11 +66,6 @@
   100% { background-color: inherit; }
 }
 
-.word-title {
-  font-size: 120%;
-  cursor: pointer;
-}
-
 .word[expanded=true] .word-details {
   display: block;
 }
@@ -51,27 +74,246 @@
   display: none;
 }
 
-.word-details-patterns-box {
-  margin-top: 4px;
-  margin-bottom: 4px;
+.word-title {
+  cursor: pointer;
+  display: flex;
 }
 
-.word-details-patterns-box-index {
-  font-weight: normal;
-  font-family: "Courier";
-  font-size: 110%;
+.word-value {
+  font-size: 120%;
+  font-weight: 550;
 }
 
-.word-details-patterns-box-word {
-  margin-left: 3px;
-  border-radius: 6px;
-  padding-left: 7px;
-  padding-right: 7px;
+.word-type {
+  margin-left: 10px;
+
+  border: 1px solid #0000;
+  border-radius: 4px;
+
+  padding: 4px;
   padding-top: 2px;
   padding-bottom: 2px;
-  background: #444;
+
+  background-color: #8888;
+
+  font-size: 90%;
 }
 
-.word-details-patterns-box-word a {
+.word-type[wordType=verb] {
+  background-color: #080;
+}
+
+.word-type[wordType=noun] {
+  background-color: #a09000;
+}
+
+.word-type[wordType=adjective] {
+  background-color: #06d;
+}
+
+.word-type[wordType=preposition] {
+  background-color: #922;
+}
+
+.word-details {
+  margin-top: 10px;
+}
+
+.word-translations::before {
+  margin-right: 8px;
+
+  content: "Übersetzungen:";
+  font-weight: bold;
+}
+
+.word-translations {
+  margin-top: 8px;
+  display: flex;
+}
+
+.word-translation {
+  margin-left: 5px;
+}
+
+.word-translation:first-child {
+  margin-left: 0px;
+}
+
+.word-translation::after {
+  content: ";"
+}
+
+.word-translation:last-child::after {
+  content: "";
+}
+
+.word-description {
+  margin-top: 8px;
+}
+
+/*.word-description::before {
+  margin-right: 5px;
+
+  content: "Beschreibung:";
+  font-weight: bold;
+}*/
+
+.word-references::before {
+  margin-right: 8px;
+
+  content: "Siehe:";
+  font-weight: bold;
+}
+
+.word-references {
+  margin-top: 15px;
+}
+
+.word-reference {
+  margin-left: 5px;
+
+  border: 2px solid #8888;
+  border-radius: 4px;
+
+  padding: 5px;
+  padding-top: 2px;
+  padding-bottom: 3px;
+
   color: inherit;
+  text-decoration: none;
+}
+
+.word-reference:first-child {
+  margin-left: 0px;
+}
+
+.word-reference[wordType=verb] {
+  border-color: #080;
+}
+
+.word-reference[wordType=noun] {
+  border-color: #a09000;
+}
+
+.word-reference[wordType=adjective] {
+  border-color: #06d;
+}
+
+.word-reference[wordType=preposition] {
+  border-color: #922;
+}
+
+.word-reference:hover {
+  text-decoration: underline;
+}
+
+.word-reference[wordType=verb]:hover {
+  background-color: #080;
+}
+
+.word-reference[wordType=noun]:hover {
+  background-color: #a09000;
+}
+
+.word-reference[wordType=adjective]:hover {
+  background-color: #06d;
+}
+
+.word-reference[wordType=preposition]:hover {
+  background-color: #922;
+}
+
+
+.search-word {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #555;
+  border-radius: 10px;
+
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 8px;
+  padding-bottom: 10px;
+
+  display: flex;
+
+  cursor: pointer;
+}
+
+.search-word-value {
+  font-size: 120%;
+  font-weight: 550;
+}
+
+.search-word-type {
+  margin-left: 10px;
+
+  border: 1px solid #0000;
+  border-radius: 4px;
+
+  padding: 4px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+
+  background-color: #8888;
+
+  font-size: 90%;
+}
+
+.search-word-type[wordType=verb] {
+  background-color: #080;
+}
+
+.search-word-type[wordType=noun] {
+  background-color: #a09000;
+}
+
+.search-word-type[wordType=adjective] {
+  background-color: #06d;
+}
+
+.search-word-type[wordType=preposition] {
+  background-color: #922;
+}
+
+.search-word-translations::before {
+  margin-left: 8px;
+  margin-right: 8px;
+
+  content: "–";
+}
+
+.search-word-translations {
+  margin-top: auto;
+  margin-bottom: auto;
+
+  display: flex;
+}
+
+.search-word-translation {
+  margin-left: 5px;
+}
+
+.search-word-translation:first-child {
+  margin-left: 0px;
+}
+
+.search-word-translation::after {
+  content: ";"
+}
+
+.search-word-translation:last-child::after {
+  content: "";
+}
+
+.search-word-match {
+  text-decoration: underline;
+}
+
+.search-word-value .search-word-match {
+  font-weight: 700;
+}
+
+.search-word-translation .search-word-match {
+  font-weight: 550;
 }

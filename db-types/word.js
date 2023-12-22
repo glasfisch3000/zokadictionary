@@ -7,21 +7,6 @@ class Word {
     this.references = references || []
     this.translations = translations || []
   }
-
-  construct() {
-    if(this.string) return this.string
-
-    var patternString = "$"
-
-    var pattern = this.pattern
-    while(pattern) {
-      patternString = patternString.replaceAll("$", pattern.patternString)
-      pattern = pattern.parent
-    }
-
-    patternString = patternString.replaceAll("$", this.base)
-    return patternString
-  }
 }
 
 module.exports.name = "word"
