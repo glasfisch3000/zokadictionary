@@ -1,295 +1,231 @@
-const express = require("express")
-const server = express()
-server.use(require("body-parser").urlencoded({ extended: false }))
+const { log, err, childLogger } = require("./logging.js")(["app"])
 
-const http = require("http").Server(server)
-const port = 80
-
+log("importing modules")
+const server = require("./server.js")
 const client = require("./client.js")
+const api = require("./api.js")
 
-// collection of database functions
-const db = require("./db-types.js")
+log("starting database")
+require("./database.js")(childLogger).then(data => { // actual database pointer
+  log("setup done")
 
-require("./database.js")().then(data => { // actual database pointer
-  logGet("/", null, async (res) => {
-    res.send(await client("index.html"))
-  })
+  server.getFile("/main.css", __dirname + "/client/main.css", childLogger)
+  server.getFile("/dictionary.css", __dirname + "/client/dictionary.css", childLogger)
+  server.getFile("/dictionary.js", __dirname + "/client/dictionary.js", childLogger)
+  server.getFile("/main-form.css", __dirname + "/client/main-form.css", childLogger)
+  server.getFile("/new-word.js", __dirname + "/client/new-word.js", childLogger)
 
-  logGet("/main.css", null, async (res) => {
-    res.sendFile(__dirname + "/client/main.css")
-  })
-
-  logGet("/dictionary", null, async (res) => {
-    res.send(await client("dictionary.html"))
-  })
-
-  logGet("/dictionary.css", null, async (res) => {
-    res.sendFile(__dirname + "/client/dictionary.css")
-  })
-
-  logGet("/dictionary.js", null, async (res) => {
-    res.sendFile(__dirname + "/client/dictionary.js")
-  })
-
-  logGet("/new-word", null, async (res) => {
-    res.send(await client("new-word.html"))
-  })
-
-  logGet("/main-form.css", null, async (res) => {
-    res.sendFile(__dirname + "/client/main-form.css")
-  })
-
-  logGet("/new-word.js", null, async (res) => {
-    res.sendFile(__dirname + "/client/new-word.js")
-  })
-
-  logGet("/dictionary-api/all-words", null, async (res) => {
+  server.get("/", childLogger, async (req, res, log, err) => {
+    log(`sending client file: "index.html"`)
     try {
-      var words = await db.word.getAll(data)
-      if(words) {
-        for(var word of words) {
-          word.constructed = word.construct()
-        }
-        res.send(JSON.stringify(words))
+      res.send(await client("index.html"))
+    } catch(error) {
+      err(error)
+    }
+  })
+
+  server.get("/dictionary", childLogger, async (req, res) => {
+    log(`sending client file: "dictionary.html"`)
+    try {
+      res.send(await client("dictionary.html"))
+    } catch(error) {
+      err(error)
+    }
+  })
+
+  server.get("/new-word", childLogger, async (req, res, log, err) => {
+    log(`sending client file: "new-word.html"`)
+    try {
+      res.send(await client("new-word.html"))
+    } catch(error) {
+      err(error)
+    }
+  })
+
+  server.get("/dictionary-api/all-words", childLogger, async (req, res, log, err, childLogger) => {
+    log("API request: get-all-words")
+
+    try {
+      // fetch words from db
+      const words = await api.getAllWords(data, childLogger)
+
+      if(words === null) { // words not found
+        res.status(404).send("")
         return
-      } else {
-        res.status(404).send("")
+      }
+
+      if(words) {
+        res.send(JSON.stringify(words))
+      } else { // internal error
+        res.status(500).send("")
       }
     } catch(error) {
-      console.log("[server][get-all-words] " + error)
+      err(error)
       res.status(500).send("")
     }
   })
 
-  logGet("/dictionary-api/word", ["id"], async (res, query) => {
-    if(query.id) {
-      try {
-        var word = await db.word.get(data, query.id)
-        if(word) {
-          word.constructed = word.construct()
-          res.send(JSON.stringify(word))
-          return
-        } else {
-          res.status(404).send("")
-        }
-      } catch(error) {
-        console.log("[server][get-word] " + error)
-        res.status(500).send("")
-      }
-    } else {
-      res.status(400).send("")
-    }
-  })
+  server.get("/dictionary-api/word", childLogger, async (req, res, log, err, childLogger) => {
+    log("API request: get-word")
 
-  logGet("/dictionary-api/post-word", ["string", "base", "pattern"], async (res, query) => {
-    if(query.string || (query.base && query.pattern)) {
-      try {
-        let word = await db.word.create(data, query.string, query.base, query.pattern)
-        if(word) {
-          res.send(JSON.stringify(word))
-        } else {
-          res.status(500).send("")
-        }
-      } catch(error) {
-        console.log("[server][post-word] " + error)
-        res.status(500).send("")
-      }
-    } else {
-      res.status(400).send("")
-    }
-  })
-
-  logGet("/dictionary-api/all-bases", null, async (res) => {
     try {
-      let bases = await db.base.getAll(data)
-      if(bases) {
-        res.send(JSON.stringify(bases))
-      } else {
+      // decode id value from url
+      const id = req.query.id
+      if(!id) {
+        err(`query part "id" not found`)
+        res.status(400).send("")
+        return
+      }
+      log(`query part "id": "${id}"`)
+
+      // fetch word from db
+      const word = await api.getWord(data, childLogger)
+
+      if(word === null) { // word not found
         res.status(404).send("")
+        return
+      }
+
+      if(word) {
+        res.send(JSON.stringify(word))
+      } else { // internal error
+        res.status(500).send("")
       }
     } catch(error) {
-      console.log("[server][get-all-bases] " + error)
+      err(error)
       res.status(500).send("")
     }
   })
 
-  logGet("/dictionary-api/base", ["id"], async (res, query) => {
-    if(query.id) {
-      try {
-        let base = await db.base.get(data, query.id)
-        if(base) {
-          res.send(JSON.stringify(base))
-        } else {
-          res.status(404).send("")
-        }
-      } catch(error) {
-        console.log("[server][get-base] " + error)
-        res.status(500).send("")
-      }
-    } else {
-      res.status(400).send("")
-    }
-  })
+  const postWord = async (req, res, log, err, childLogger) => {
+    log("API request: post-word")
 
-  logGet("/dictionary-api/post-base", ["string"], async (res, query) => {
-    if(query.string) {
-      try {
-        let base = await db.base.create(data, query.string)
-        if(base) {
-          res.send(JSON.stringify(base))
-        } else {
-          res.status(500).send("")
-        }
-      } catch(error) {
-        console.log("[server][post-base] " + error)
-        res.status(500).send("")
-      }
-    } else {
-      res.status(400).send("")
-    }
-  })
-
-  logGet("/dictionary-api/all-patterns", null, async (res) => {
     try {
-      let patterns = await db.pattern.getAll(data)
-      if(patterns) {
-        res.send(JSON.stringify(patterns))
+      // decode args from url
+      const string = req.query.string
+      const type = req.query.type
+      const description = req.query.description
+      let references = req.query.references
+      let translations = req.query.translations
+  
+      // check for string
+      if(!string) {
+        err(`query part "string" not found`)
+        res.status(400).send("")
+        return
+      }
+
+      // convert references (if existing) to array
+      if(references) {
+        references = references.split(",")
+      }
+
+      // convert translations (if existing) to array
+      if(translations) {
+        translations = translations.split(",")
+      }
+
+      // construct word with new information
+      const { Word } = require("./db-types.js").word
+      const word = new Word(0, string, type, description, references || null, translations || null)
+
+      // update word in db
+      const result = await api.postWord(data, childLogger, word)
+
+      if(result) {
+        res.status(200).send(JSON.stringify(result))
       } else {
-        res.status(404).send("")
+        res.status(500).send("")
       }
     } catch(error) {
-      console.log("[server][get-all-patterns] " + error)
+      err(error)
       res.status(500).send("")
     }
-  })
+  }
 
-  logGet("/dictionary-api/pattern", ["id"], async (res, query) => {
-    if(query.id) {
-      try {
-        let pattern = await db.pattern.get(data, query.id)
-        if(pattern) {
-          res.send(JSON.stringify(pattern))
-        } else {
-          res.status(404).send("")
-        }
-      } catch(error) {
-        console.log("[server][get-pattern] " + error)
-        res.status(500).send("")
-      }
-    } else {
-      res.status(400).send("")
-    }
-  })
+  server.get("/dictionary-api/post-word", childLogger, postWord)
+  server.post("/dictionary-api/word", childLogger, postWord)
 
-  logGet("/dictionary-api/post-pattern", ["id", "title", "string", "parent"], async (res, query) => {
-    if(query.id && query.title && query.string) {
-      try {
-        let pattern = await db.pattern.create(data, query.id, query.title, query.string, query.parent)
-        if(pattern) {
-          res.send(JSON.stringify(pattern))
-        } else {
-          res.status(500).send("")
-        }
-      } catch(error) {
-        console.log("[server][post-pattern] " + error)
-        res.status(500).send("")
-      }
-    } else {
-      res.status(400).send("")
-    }
-  })
+  const putWord = async (req, res, log, err, childLogger) => {
+    log("API request: put-word")
 
-  logGet("/dictionary-api/all-classes", null, async (res) => {
     try {
-      let classes = await db.class.getAll(data)
-      if(classes) {
-        res.send(JSON.stringify(classes))
+      // decode args from url
+      const id = req.query.id
+      const string = req.query.string
+      const type = req.query.type
+      const description = req.query.description
+      let references = req.query.references
+      let translations = req.query.translations
+  
+      // check for id
+      if(!id) {
+        err(`query part "id" not found`)
+        res.status(400).send("")
+        return
+      }
+
+      // convert references (if existing) to array
+      if(references) {
+        references = references.split(",")
+      }
+
+      // convert translations (if existing) to array
+      if(translations) {
+        translations = translations.split(",")
+      }
+
+      // construct word with new information
+      const { Word } = require("./db-types.js").word
+      const word = new Word(id, string || null, type, description, references || null, translations || null)
+
+      // update word in db
+      const result = await api.putWord(data, childLogger, word)
+
+      if(result) {
+        res.status(200).send("")
       } else {
-        res.status(404).send("")
+        res.status(500).send("")
       }
     } catch(error) {
-      console.log("[server][get-all-classes] " + error)
+      err(error)
       res.status(500).send("")
     }
-  })
+  }
 
-  logGet("/dictionary-api/class", ["id"], async (res, query) => {
-    if(query.id) {
-      try {
-        let wordClass = await db.class.get(data, query.id)
-        if(wordClass) {
-          res.send(JSON.stringify(wordClass))
-        } else {
-          res.status(404).send("")
-        }
-      } catch(error) {
-        console.log("[server][get-class] " + error)
+  server.get("/dictionary-api/put-word", childLogger, putWord)
+  server.put("/dictionary-api/word", childLogger, putWord)
+
+  const deleteWord = async (req, res, log, err, childLogger) => {
+    log("API request: delete-word")
+
+    try {
+      // decode args from url
+      const id = req.query.id
+  
+      // check for id
+      if(!id) {
+        err(`query part "id" not found`)
+        res.status(400).send("")
+        return
+      }
+
+      // delete word in db
+      const result = await api.deleteWord(data, childLogger, id)
+
+      if(result) {
+        res.status(200).send("")
+      } else {
         res.status(500).send("")
       }
-    } else {
-      res.status(400).send("")
+    } catch(error) {
+      err(error)
+      res.status(500).send("")
     }
-  })
+  }
 
-  logGet("/dictionary-api/post-class", ["id", "title"], async (res, query) => {
-    if(query.id && query.title) {
-      try {
-        let wordClass = await db.class.create(data, query.id, query.title)
-        if(wordClass) {
-          res.send(JSON.stringify(wordClass))
-        } else {
-          res.status(500).send("")
-        }
-      } catch(error) {
-        console.log("[server][post-class] " + error)
-        res.status(500).send("")
-      }
-    } else {
-      res.status(400).send("")
-    }
-  })
+  server.get("/dictionary-api/delete-word", childLogger, deleteWord)
+  server.delete("/dictionary-api/word", childLogger, deleteWord)
 
-  http.listen(port, () => { console.log("[server] listening on port " + port) })
+  server.start(childLogger)
 })
-
-function logGet(path, wantedQueryComponents, callback) {
-  server.get(path, (req, res) => {
-    var message = ""
-
-    let queryResults = []
-    if(wantedQueryComponents) for(let component of wantedQueryComponents) {
-      let result = req.query[component]
-
-      queryResults[component] = result
-
-      message += message ? "&" : "?"
-      message += component + "=" + result
-    }
-
-    message = "[server] GET request: " + path + message
-    console.log(message)
-
-    callback(res, queryResults, req)
-  })
-}
-
-function logPost(path, wantedQueryComponents, callback) {
-  server.post(path, (req, res) => {
-    var message = ""
-
-    let queryResults = []
-    if(wantedQueryComponents) for(let component of wantedQueryComponents) {
-      let result = req.query[component]
-
-      queryResults[component] = result
-
-      message += message ? "&" : "?"
-      message += component + "=" + result
-    }
-
-    message = "[server] POST request: " + path + message
-    console.log(message)
-
-    callback(res, queryResults, req)
-  })
-}

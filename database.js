@@ -3,26 +3,28 @@ const dbTypes = require("./db-types.js")
 
 const dbFile = "./data/database.db"
 
-async function init() {
+async function init(logger) {
+  const { log, err, childLogger } = logger("db-init")
+
   try {
     let sqlite = (await import("sqlite-async")).Database
 
     let db = await sqlite.open(dbFile)
-    console.log("[db-setup] successfully connected to database")
+    log("successfully connected to database")
 
-    for(let dbType of dbTypes.all) {
+    for(const dbType of dbTypes.all) {
       if(dbType && dbType.setup) {
-        console.log(`[db-setup] setting up db-type '${dbType.name}'`)
-        await dbType.setup(db)
+        log(`running setup for db-type '${dbType.name}'`)
+        await dbType.setup(db, childLogger)
       }
     }
 
-    console.log("[db-setup] successfully created database")
+    log("successfully created database")
 
     return db
-  } catch(err) {
-    console.log("[db-setup] error connecting to database")
-    throw err
+  } catch(error) {
+    err("error connecting to database")
+    throw error
   }
 }
 

@@ -132,3 +132,6 @@ dist
 
 # data
 data
+
+# VSCode shit
+.vscode

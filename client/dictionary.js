@@ -1,57 +1,83 @@
 let dictionaryContainer = document.getElementById("dictionary-container")
 
-fetch("/dictionary-api/all-words", { method: "GET" })
-  .then((response) => response.json())
+fetch("/dictionary-api/all-words", { method: "GET" }) // get list of all words from server
+  .then((response) => response.json()) // convert to usable object
   .then((words) => {
-    dictionaryContainer.innerHTML = ""
+    dictionaryContainer.innerHTML = "" // clear website contents
 
-    if(!words) {
+    if(!words) { // no data provided by server
       dictionaryContainer.innerHTML = "Something went wrong."
       return
     }
 
-    var wordElements = []
-
+    // for every entry provided by the server, create a div box with information about it
+    let wordElements = []
     for(var word of words) {
-      var element = document.createElement("div")
+      // expandable box with information about the entry
+      let element = document.createElement("div")
       element.id = "word-" + word.id
-      element.class = "word"
       element.classList.add("word")
       element.setAttribute("expanded", false)
       element.finalWord = word.string || word.constructed
       wordElements.push(element)
 
-      var title = document.createElement("div")
+
+      // title section that is always visible
+      let title = document.createElement("div")
       title.id = element.id + "-title"
-      title.class = element.class + "-title"
-      title.classList.add(element.class + "-title")
-      title.innerHTML = wordConstructMarkdown(word)
+      title.classList.add("word-title")
       title.onclick = (event) => {
         event.currentTarget.parentElement.setAttribute("expanded", event.currentTarget.parentElement.getAttribute("expanded") == "false")
       }
       element.appendChild(title)
 
-      var details = document.createElement("div")
+      // the word itself
+      let value = document.createElement("div")
+      value.id = element.id + "-value"
+      value.classList.add("word-value")
+      value.innerHTML = wordConstructMarkdown(word)
+      title.appendChild(value)
+
+      // the word's type
+      let type = document.createElement("div")
+      type.id = element.id + "-type"
+      type.classList.add("word-type")
+      type.wordType = word.type || "other"
+      type.innerHTML = word.type || "other"
+      title.appendChild(type)
+
+
+      // details section that is visible only when expanded
+      let details = document.createElement("div")
       details.id = element.id + "-details"
-      details.class = element.class + "-details"
-      details.classList.add(element.class + "-details")
+      details.classList.add("word-details")
       element.appendChild(details)
 
-      var patterns = document.createElement("div")
-      patterns.id = details.id + "-patterns"
-      patterns.class = details.class + "-patterns"
-      patterns.classList.add(details.class + "-patterns")
-      details.appendChild(patterns)
+      // a description of the word and it's meaning
+      let description = document.createElement("div")
+      description.id = element.id + "-description"
+      description.classList.add("word-description")
+      description.innerHTML = word.description ? `${word.description}` : "no description"
+      details.appendChild(description)
 
-      var equalCandidates = words.filter(w => w.base == word.base)
+      // a list of all the linked entries
+      if(word.references && word.references.length > 0) {
+        let references = document.createElement("div")
+        references.id = element.id + "-references"
+        references.classList.add("word-references")
+        details.appendChild(references)
 
-      for(let pattern of wordMakePatterns(word, equalCandidates)) {
-        var patternBox = document.createElement("div")
-        patternBox.id = patterns.id + "-box-" + pattern.id
-        patternBox.class = patterns.class + "-box"
-        patternBox.classList.add(patterns.class + "-box")
-        patternBox.innerHTML = `<b class="${patternBox.class}-index">${pattern.index}</b>. ${pattern.title}: <i class="${patternBox.class}-word">${pattern.string}</i>`
-        patterns.appendChild(patternBox)
+        for(const reference of word.references) {
+          if(!reference || !reference.id || !reference.string) continue
+
+          let item = document.createElement("a")
+          item.id = element.id + `-reference-${reference.id}`
+          item.classList.add("word-reference")
+          item.innerHTML = reference.string
+          item.href = `#word-${reference.id}`
+          item.onclick = () => { wordLinkClick(reference.id) }
+          references.appendChild(item)
+        }
       }
     }
 
@@ -95,34 +121,6 @@ function wordConstructMarkdown(word) {
   }
 
   return result.replaceAll("$", "<b>" + word.base + "</b>")
-}
-
-function wordMakePatterns(word, equalCandidates) {
-  var patterns = []
-  var pattern = word.pattern
-  while(pattern) {
-    patterns.splice(0, 0, pattern)
-    pattern = pattern.parent
-  }
-
-  var string = word.base
-  var results = [{ index: 0, string: string, title: "Base", id: "" }]
-  for(var i in patterns) {
-    let pattern = patterns[i]
-
-    string = pattern.patternString.replaceAll("$", `<b>${string}</b>`)
-    var result = { index: 1+parseInt(i), string: string, title: decodeURI(pattern.title), id: pattern.id }
-
-    let equal = equalCandidates.filter(w => w.pattern.id == pattern.id && (w.string || w.constructed) == w.constructed && w.id != word.id)
-    if(equal.length == 1) {
-      let linkedID = equal[0].id
-      result.string = `<a href="#word-${linkedID}" onclick="wordLinkClick(${linkedID})">${result.string}</a>`
-    }
-
-    results.push(result)
-  }
-
-  return results
 }
 
 function wordLinkClick(linkedID) {
