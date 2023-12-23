@@ -2,8 +2,8 @@ const { log, err, childLogger } = require("./logging.js")(["app"])
 
 log("importing modules")
 const server = require("./server.js")
-const client = require("./client.js")
 const api = require("./api.js")
+const security = require("./security/security.js")
 
 log("starting database")
 require("./db/database.js")(childLogger).then(data => { // actual database pointer
@@ -78,6 +78,19 @@ require("./db/database.js")(childLogger).then(data => { // actual database point
     log("API request: post-word")
 
     try {
+      const check = await security.checkRequest(childLogger, "dictionary-api/post-word", req.query, ["string", "type", "description", "references", "translations"])
+      if(check) {
+        log("authentication successful")
+      } else if(check === null) {
+        err("authentication missing")
+        res.status(401).send("")
+        return
+      } else {
+        err("authentication failed")
+        res.status(403).send("")
+        return
+      }
+
       // decode args from url
       const string = req.query.string
       const type = req.query.type
@@ -127,6 +140,19 @@ require("./db/database.js")(childLogger).then(data => { // actual database point
     log("API request: put-word")
 
     try {
+      const check = await security.checkRequest(childLogger, "dictionary-api/put-word", req.query, ["id", "string", "type", "description", "references", "translations"])
+      if(check) {
+        log("authentication successful")
+      } else if(check === null) {
+        err("authentication missing")
+        res.status(401).send("")
+        return
+      } else {
+        err("authentication failed")
+        res.status(403).send("")
+        return
+      }
+
       // decode args from url
       const id = req.query.id
       const string = req.query.string
@@ -177,6 +203,19 @@ require("./db/database.js")(childLogger).then(data => { // actual database point
     log("API request: delete-word")
 
     try {
+      const check = await security.checkRequest(childLogger, "dictionary-api/delete-word", req.query, ["id"])
+      if(check) {
+        log("authentication successful")
+      } else if(check === null) {
+        err("authentication missing")
+        res.status(401).send("")
+        return
+      } else {
+        err("authentication failed")
+        res.status(403).send("")
+        return
+      }
+
       // decode args from url
       const id = req.query.id
   

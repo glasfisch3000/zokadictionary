@@ -135,3 +135,6 @@ data
 
 # VSCode shit
 .vscode
+
+# private security data
+security/key.txt
