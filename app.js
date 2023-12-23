@@ -14,15 +14,10 @@ require("./db/database.js")(childLogger).then(data => { // actual database point
   server.getFile("/dictionary.js", __dirname + "/client/dictionary.js", childLogger)
 
   server.getRedirect("/", "/dictionary", childLogger)
-
-  server.get("/dictionary", childLogger, async (req, res) => {
-    log(`sending client file: "dictionary.html"`)
-    try {
-      res.send(await client("dictionary.html"))
-    } catch(error) {
-      err(error)
-    }
-  })
+  server.getRedirect("/index", "/dictionary", childLogger)
+  server.getRedirect("/index.html", "/dictionary", childLogger)
+  server.getRedirect("/dictionary.html", "/dictionary", childLogger)
+  server.getFile("/dictionary", __dirname + "/client/dictionary.html", childLogger)
 
   server.get("/dictionary-api/all-words", childLogger, async (req, res, log, err, childLogger) => {
     log("API request: get-all-words")
