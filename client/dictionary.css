@@ -1,3 +1,11 @@
+:root {
+  --verb-color: #080;
+  --noun-color: #a09000;
+  --adjective-color: #16d;
+  --preposition-color: #922;
+  --number-color: #18b;
+}
+
 .header-search {
   margin-top: 6px;
   margin-bottom: 6px;
@@ -100,19 +108,23 @@
 }
 
 .word-type[wordType=verb] {
-  background-color: #080;
+  background-color: var(--verb-color);
 }
 
 .word-type[wordType=noun] {
-  background-color: #a09000;
+  background-color: var(--noun-color);
 }
 
 .word-type[wordType=adjective] {
-  background-color: #06d;
+  background-color: var(--adjective-color);
 }
 
 .word-type[wordType=preposition] {
-  background-color: #922;
+  background-color: var(--preposition-color);
+}
+
+.word-type[wordType=number] {
+  background-color: var(--number-color);
 }
 
 .word-details {
@@ -188,19 +200,23 @@
 }
 
 .word-reference[wordType=verb] {
-  border-color: #080;
+  border-color: var(--verb-color);
 }
 
 .word-reference[wordType=noun] {
-  border-color: #a09000;
+  border-color: var(--noun-color);
 }
 
 .word-reference[wordType=adjective] {
-  border-color: #06d;
+  border-color: var(--adjective-color);
 }
 
 .word-reference[wordType=preposition] {
-  border-color: #922;
+  border-color: var(--preposition-color);
+}
+
+.word-reference[wordType=number] {
+  border-color: var(--number-color);
 }
 
 .word-reference:hover {
@@ -208,19 +224,23 @@
 }
 
 .word-reference[wordType=verb]:hover {
-  background-color: #080;
+  background-color: var(--verb-color);
 }
 
 .word-reference[wordType=noun]:hover {
-  background-color: #a09000;
+  background-color: var(--noun-color);
 }
 
 .word-reference[wordType=adjective]:hover {
-  background-color: #06d;
+  background-color: var(--adjective-color);
 }
 
 .word-reference[wordType=preposition]:hover {
-  background-color: #922;
+  background-color: var(--preposition-color);
+}
+
+.word-reference[wordType=number]:hover {
+  background-color: var(--number-color);
 }
 
 
@@ -261,19 +281,23 @@
 }
 
 .search-word-type[wordType=verb] {
-  background-color: #080;
+  background-color: var(--verb-color);
 }
 
 .search-word-type[wordType=noun] {
-  background-color: #a09000;
+  background-color: var(--noun-color);
 }
 
 .search-word-type[wordType=adjective] {
-  background-color: #06d;
+  background-color: var(--adjective-color);
 }
 
 .search-word-type[wordType=preposition] {
-  background-color: #922;
+  background-color: var(--preposition-color);
+}
+
+.search-word-type[wordType=number] {
+  background-color: var(--number-color);
 }
 
 .search-word-translations::before {
