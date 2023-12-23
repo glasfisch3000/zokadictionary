@@ -1,4 +1,4 @@
-const db = require("./db-types.js")
+const db = require("./db/db-types.js")
 
 module.exports.getAllWords = async (data, logger) => {
   const { log, err, childLogger } = logger("api-get-all-words")

@@ -1,7 +1,7 @@
 const fs = require("fs").promises
 const dbTypes = require("./db-types.js")
 
-const dbFile = __dirname + "/data/database.db"
+const dbFile = __dirname + "/../data/database.db"
 
 async function init(logger) {
   const { log, err, childLogger } = logger("db-init")

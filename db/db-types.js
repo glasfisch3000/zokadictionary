@@ -1,4 +1,4 @@
-let word = require("./db-types/word.js")
+let word = require("./word.js")
 
 let all = [word]
 

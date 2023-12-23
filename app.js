@@ -6,7 +6,7 @@ const client = require("./client.js")
 const api = require("./api.js")
 
 log("starting database")
-require("./database.js")(childLogger).then(data => { // actual database pointer
+require("./db/database.js")(childLogger).then(data => { // actual database pointer
   log("setup done")
 
   server.getFile("/main.css", __dirname + "/client/main.css", childLogger)
@@ -108,7 +108,7 @@ require("./database.js")(childLogger).then(data => { // actual database pointer
       }
 
       // construct word with new information
-      const { Word } = require("./db-types.js").word
+      const { Word } = require("./db/db-types.js").word
       const word = new Word(0, string, type, description, references || null, translations || null)
 
       // update word in db
@@ -158,7 +158,7 @@ require("./database.js")(childLogger).then(data => { // actual database pointer
       }
 
       // construct word with new information
-      const { Word } = require("./db-types.js").word
+      const { Word } = require("./db/db-types.js").word
       const word = new Word(id, string || null, type, description, references || null, translations || null)
 
       // update word in db
