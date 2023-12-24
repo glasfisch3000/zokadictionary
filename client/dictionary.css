@@ -5,6 +5,7 @@
   --preposition-color: #922;
   --number-color: #18b;
   --question-word-color: #909;
+  --particle-color: #a60;
 }
 
 .header-search {
@@ -132,6 +133,10 @@
   background-color: var(--question-word-color);
 }
 
+.word-type[wordType=particle] {
+  background-color: var(--particle-color);
+}
+
 .word-details {
   margin-top: 10px;
 }
@@ -228,6 +233,10 @@
   border-color: var(--question-word-color);
 }
 
+.word-reference[wordType=particle] {
+  border-color: var(--particle-color);
+}
+
 .word-reference:hover {
   text-decoration: underline;
 }
@@ -254,6 +263,10 @@
 
 .word-reference[wordType="question word"]:hover {
   background-color: var(--question-word-color);
+}
+
+.word-reference[wordType=particle]:hover {
+  background-color: var(--particle-color);
 }
 
 
@@ -315,6 +328,10 @@
 
 .search-word-type[wordType="question word"] {
   background-color: var(--question-word-color);
+}
+
+.search-word-type[wordType=particle] {
+  background-color: var(--particle-color);
 }
 
 .search-word-translations::before {
