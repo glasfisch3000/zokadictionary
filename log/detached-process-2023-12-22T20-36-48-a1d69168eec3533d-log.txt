@@ -1,3 +1,0 @@
-3773727333828-03D62667C9C0458E [app] LOG: importing modules
-3773727454172-DACE30014EE6FC2C [app] LOG: starting database
-3773727531401-EF88227E93D2BFCE [app] [db-init] ERROR: error connecting to database
