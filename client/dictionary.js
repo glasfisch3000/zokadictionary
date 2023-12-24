@@ -93,12 +93,11 @@ fetch("/dictionary-api/all-words", { method: "GET" }) // get list of all words f
         for(const reference of word.references) {
           if(!reference || !reference.id || !reference.string) continue
 
-          let item = document.createElement("a")
+          let item = document.createElement("span")
           item.id = element.id + `-reference-${reference.id}`
           item.classList.add("word-reference")
           item.innerHTML = reference.string
           item.setAttribute("wordType", reference.type || "none")
-          item.href = `#word-${reference.id}`
           item.onclick = () => { wordLinkClick(reference.id) }
           references.appendChild(item)
         }
@@ -135,6 +134,7 @@ fetch("/dictionary-api/all-words", { method: "GET" }) // get list of all words f
 
 function wordLinkClick(linkedID) {
   let element = document.getElementById("word-" + linkedID)
+  element.scrollIntoView({ block: "center" })
 
   element.classList.remove("highlighted")
   element.classList.add("highlighted")
