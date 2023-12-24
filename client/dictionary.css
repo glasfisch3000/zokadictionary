@@ -52,10 +52,10 @@
   color: #888;
 }
 
-
-.word {
+.word, .search-word {
   margin-top: 10px;
   margin-bottom: 10px;
+
   border: 1px solid #555;
   border-radius: 10px;
 
@@ -84,17 +84,17 @@
   display: none;
 }
 
-.word-title {
+.word-title, .search-word {
   cursor: pointer;
   display: flex;
 }
 
-.word-value {
+.word-value, .search-word-value {
   font-size: 120%;
   font-weight: 550;
 }
 
-.word-type {
+.word-type, .search-word-type {
   margin-left: 10px;
 
   border: 1px solid #0000;
@@ -105,35 +105,35 @@
   padding-bottom: 2px;
 
   background-color: #8888;
-
+  
   font-size: 90%;
 }
 
-.word-type[wordType=verb] {
+.word-type[wordType=verb], .search-word-type[wordType=verb], .word-reference[wordType=verb]:hover {
   background-color: var(--verb-color);
 }
 
-.word-type[wordType=noun] {
+.word-type[wordType=noun], .search-word-type[wordType=noun], .word-reference[wordType=noun]:hover {
   background-color: var(--noun-color);
 }
 
-.word-type[wordType=adjective] {
+.word-type[wordType=adjective], .search-word-type[wordType=adjective], .word-reference[wordType=adjective]:hover {
   background-color: var(--adjective-color);
 }
 
-.word-type[wordType=preposition] {
+.word-type[wordType=preposition], .search-word-type[wordType=preposition], .word-reference[wordType=preposition]:hover {
   background-color: var(--preposition-color);
 }
 
-.word-type[wordType=number] {
+.word-type[wordType=number], .search-word-type[wordType=number], .word-reference[wordType=number]:hover {
   background-color: var(--number-color);
 }
 
-.word-type[wordType="question word"] {
+.word-type[wordType="question word"], .search-word-type[wordType="question word"], .word-reference[wordType="question word"]:hover {
   background-color: var(--question-word-color);
 }
 
-.word-type[wordType=particle] {
+.word-type[wordType=particle], .search-word-type[wordType=particle], .word-reference[wordType=particle]:hover {
   background-color: var(--particle-color);
 }
 
@@ -153,19 +153,19 @@
   display: flex;
 }
 
-.word-translation {
+.word-translation, .search-word-translation {
   margin-left: 5px;
 }
 
-.word-translation:first-child {
+.word-translation:first-child, .search-word-translation:first-child {
   margin-left: 0px;
 }
 
-.word-translation::after {
+.word-translation::after, .search-word-translation::after {
   content: ";"
 }
 
-.word-translation:last-child::after {
+.word-translation:last-child::after, .search-word-translation:last-child::after {
   content: "";
 }
 
@@ -241,98 +241,6 @@
   text-decoration: underline;
 }
 
-.word-reference[wordType=verb]:hover {
-  background-color: var(--verb-color);
-}
-
-.word-reference[wordType=noun]:hover {
-  background-color: var(--noun-color);
-}
-
-.word-reference[wordType=adjective]:hover {
-  background-color: var(--adjective-color);
-}
-
-.word-reference[wordType=preposition]:hover {
-  background-color: var(--preposition-color);
-}
-
-.word-reference[wordType=number]:hover {
-  background-color: var(--number-color);
-}
-
-.word-reference[wordType="question word"]:hover {
-  background-color: var(--question-word-color);
-}
-
-.word-reference[wordType=particle]:hover {
-  background-color: var(--particle-color);
-}
-
-
-.search-word {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #555;
-  border-radius: 10px;
-
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-top: 8px;
-  padding-bottom: 10px;
-
-  display: flex;
-
-  cursor: pointer;
-}
-
-.search-word-value {
-  font-size: 120%;
-  font-weight: 550;
-}
-
-.search-word-type {
-  margin-left: 10px;
-
-  border: 1px solid #0000;
-  border-radius: 4px;
-
-  padding: 4px;
-  padding-top: 2px;
-  padding-bottom: 2px;
-
-  background-color: #8888;
-
-  font-size: 90%;
-}
-
-.search-word-type[wordType=verb] {
-  background-color: var(--verb-color);
-}
-
-.search-word-type[wordType=noun] {
-  background-color: var(--noun-color);
-}
-
-.search-word-type[wordType=adjective] {
-  background-color: var(--adjective-color);
-}
-
-.search-word-type[wordType=preposition] {
-  background-color: var(--preposition-color);
-}
-
-.search-word-type[wordType=number] {
-  background-color: var(--number-color);
-}
-
-.search-word-type[wordType="question word"] {
-  background-color: var(--question-word-color);
-}
-
-.search-word-type[wordType=particle] {
-  background-color: var(--particle-color);
-}
 
 .search-word-translations::before {
   margin-left: 8px;
@@ -346,22 +254,6 @@
   margin-bottom: auto;
 
   display: flex;
-}
-
-.search-word-translation {
-  margin-left: 5px;
-}
-
-.search-word-translation:first-child {
-  margin-left: 0px;
-}
-
-.search-word-translation::after {
-  content: ";"
-}
-
-.search-word-translation:last-child::after {
-  content: "";
 }
 
 .search-word-match {

@@ -46,7 +46,7 @@ fetch("/dictionary-api/all-words", { method: "GET" }) // get list of all words f
       type.id = element.id + "-type"
       type.classList.add("word-type")
       type.setAttribute("wordType", word.type || "none")
-      type.innerHTML = word.type || "none"
+      type.innerHTML = wordTypeName(word.type)
       title.appendChild(type)
 
 
@@ -232,7 +232,7 @@ searchField.oninput = () => {
     type.id = element.id + "-type"
     type.classList.add("search-word-type")
     type.setAttribute("wordType", word.type || "none")
-    type.innerHTML = word.type || "none"
+    type.innerHTML = wordTypeName(word.type)
     element.appendChild(type)
 
     // a list of all the translations
@@ -277,4 +277,17 @@ function searchMatch(search, word) {
   }
 
   return result
+}
+
+function wordTypeName(type) {
+  switch(type) {
+    case "adjective": return "Adjektiv"
+    case "noun": return "Substantiv"
+    case "number": return "Zahlwort"
+    case "partice": return "Partikel"
+    case "preposition": return "Präposition"
+    case "question word": return "Fragewort"
+    case "verb": return "Verb"
+    default: return "none"
+  }
 }
