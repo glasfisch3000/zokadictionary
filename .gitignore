@@ -130,8 +130,9 @@ dist
 .DS_Store
 */.DS_Store
 
-# data
+# data and logs stuff
 data
+log
 
 # VSCode shit
 .vscode
