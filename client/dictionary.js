@@ -288,6 +288,6 @@ function wordTypeName(type) {
     case "preposition": return "Präposition"
     case "question word": return "Fragewort"
     case "verb": return "Verb"
-    default: return "none"
+    default: return "—"
   }
 }
