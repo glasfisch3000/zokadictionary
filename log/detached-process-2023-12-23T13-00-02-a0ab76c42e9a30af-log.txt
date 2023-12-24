@@ -1,0 +1,24 @@
+3832721671289-F5E404671D0EAB7F [app] LOG: importing modules
+3832721900454-04567E84F629B25B [app] LOG: starting database
+3832722090733-0F434928E5438F30 [app] [db-init] LOG: successfully connected to database
+3832722090933-F087A1F462F491E5 [app] [db-init] LOG: running setup for db-type 'word'
+3832722092691-6B08FD43833D7F9C [app] [db-init] [db-word-setup] LOG: table "Word" exists
+3832722092960-38FB6220C6B70689 [app] [db-init] [db-word-setup] LOG: table "Reference" exists
+3832722093191-6355825832671F71 [app] [db-init] [db-word-setup] LOG: table "Translation" exists
+3832722093298-0D5D03F57950B109 [app] [db-init] LOG: successfully created database
+3832722093719-AC111557143B9FC9 [app] LOG: setup done
+3832722096842-CF46435F59B8FB0C [app] [server] LOG: listening on port 2718
+3834549015952-1074BA21EAA5D8F2 [app] [session-62610813962E5168] LOG: GET request: "/dictionary-api/all-words"
+3834549016265-E53EE4649DE8E71C [app] [session-62610813962E5168] LOG: API request: get-all-words
+3834549016802-04F44EAD48047F95 [app] [session-62610813962E5168] [api-get-all-words] LOG: fetching words
+3834552575549-6E10242C5B212DB4 [app] [session-3897E67866CA1E5C] LOG: PUT request: "/dictionary-api/word"
+3834552575891-022E19E4A2EC6B30 [app] [session-3897E67866CA1E5C] LOG: API request: put-word
+3834552577167-40175423A6E44503 [app] [session-3897E67866CA1E5C] [security-check] ERROR: invalid hash value
+3834552577276-6257B1BBE737ECD9 [app] [session-3897E67866CA1E5C] ERROR: authentication failed
+3834552688663-38D0CE75BB477922 [app] [session-FD0FAC0800618328] LOG: GET request: "/dictionary-api/all-words"
+3834552688785-D3FC0B14ED2BDE10 [app] [session-FD0FAC0800618328] LOG: API request: get-all-words
+3834552688853-9408E45D1408F1C5 [app] [session-FD0FAC0800618328] [api-get-all-words] LOG: fetching words
+3834672456389-CD746BEE11C68AE5 [app] [session-F02D929C2604FE4E] LOG: GET request: "/"
+3834672456503-E3E13558670E23E9 [app] [session-F02D929C2604FE4E] LOG: sending redirect: "/dictionary"
+3834672984193-3AFE466A026E5701 [app] [session-BBC897E22A611AD9] LOG: GET request: "/dictionary"
+3834672984328-009E5C3B0EEC1D9C [app] [session-BBC897E22A611AD9] LOG: sending file: "/root/web/zokadictionary/client/dictionary.html"

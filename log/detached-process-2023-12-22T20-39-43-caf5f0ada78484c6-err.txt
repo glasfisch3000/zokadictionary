@@ -1,0 +1,10 @@
+node:internal/process/promises:289
+            triggerUncaughtException(err, true /* fromPromise */);
+            ^
+
+[Error: SQLITE_CANTOPEN: unable to open database file] {
+  errno: 14,
+  code: 'SQLITE_CANTOPEN'
+}
+
+Node.js v20.9.0

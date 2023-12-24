@@ -1,0 +1,23 @@
+3830843460948-EB4CFB95EDB01F7C [app] LOG: importing modules
+3830843560402-FEE93A42C465CB71 [app] LOG: starting database
+3830843719851-EE87CB7B0B20FECC [app] [db-init] LOG: successfully connected to database
+3830843720094-21C3A9D4B6E935AD [app] [db-init] LOG: running setup for db-type 'word'
+3830843721037-108D978668776E66 [app] [db-init] [db-word-setup] LOG: table "Word" exists
+3830843732109-6779D6D7B22154C4 [app] [db-init] [db-word-setup] LOG: table "Reference" exists
+3830843732371-36B02FB901E81157 [app] [db-init] [db-word-setup] LOG: table "Translation" exists
+3830843732462-9DB4A6E305F4C13D [app] [db-init] LOG: successfully created database
+3830843732938-20092441FD1D7800 [app] LOG: setup done
+3830843735584-95B15CFA9453FA1F [app] [server] LOG: listening on port 2718
+3830864023604-66ED0B50ACB67749 [app] [session-239FBFE4423226C4] LOG: GET request: "/"
+3830864023896-3C47DC7C8C72551C [app] [session-239FBFE4423226C4] LOG: sending redirect: "/dictionary"
+3830864069390-288B14643955F833 [app] [session-4C4478442550F26D] LOG: GET request: "/dictionary"
+3830864069514-66DA96C0139B9271 [app] [session-4C4478442550F26D] LOG: sending file: "/root/web/zokadictionary/client/dictionary.html"
+3830864124655-3F3326F7701151EE [app] [session-A19C7712F3664E99] LOG: GET request: "/main.css"
+3830864124792-244620C10D78DFB0 [app] [session-A19C7712F3664E99] LOG: sending file: "/root/web/zokadictionary/client/main.css"
+3830864154227-C393A106C7B7356A [app] [session-8DDBB246735D09C5] LOG: GET request: "/dictionary.css"
+3830864154300-7F16AE86C00EC008 [app] [session-8DDBB246735D09C5] LOG: sending file: "/root/web/zokadictionary/client/dictionary.css"
+3830864157182-6E804646E7AB3F11 [app] [session-BA4BAF17EC7563CA] LOG: GET request: "/dictionary.js"
+3830864157262-F2C90F259B261040 [app] [session-BA4BAF17EC7563CA] LOG: sending file: "/root/web/zokadictionary/client/dictionary.js"
+3830864192958-581AB392C024883B [app] [session-2705CABDD6D28E59] LOG: GET request: "/dictionary-api/all-words"
+3830864193144-D9271D535DC11C43 [app] [session-2705CABDD6D28E59] LOG: API request: get-all-words
+3830864193276-1E8CD56F2CF61E47 [app] [session-2705CABDD6D28E59] [api-get-all-words] LOG: fetching words

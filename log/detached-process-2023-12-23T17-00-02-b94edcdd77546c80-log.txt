@@ -1,0 +1,130 @@
+3847121746632-6B108C5B5CD3928E [app] LOG: importing modules
+3847121978116-FC9FB4B41E2264B6 [app] LOG: starting database
+3847122107003-98B2BF8BF8B8986D [app] [db-init] LOG: successfully connected to database
+3847122107236-2248C11A000B45B2 [app] [db-init] LOG: running setup for db-type 'word'
+3847122109029-1B905AB2A54F07B5 [app] [db-init] [db-word-setup] LOG: table "Word" exists
+3847122109700-E7458F2BD16DC730 [app] [db-init] [db-word-setup] LOG: table "Reference" exists
+3847122109907-62D36FD538DE0693 [app] [db-init] [db-word-setup] LOG: table "Translation" exists
+3847122109994-9F808DFE76903AC2 [app] [db-init] LOG: successfully created database
+3847122110376-A9C4AC0B160DBB3F [app] LOG: setup done
+3847122112901-5F20F096753E6C82 [app] [server] LOG: listening on port 2718
+3847179310395-4CBBAE2B4A28B46C [app] [session-293B20BD29AD4F22] LOG: POST request: "/dictionary-api/word"
+3847179310740-9D0511235BA842A6 [app] [session-293B20BD29AD4F22] LOG: API request: post-word
+3847179312338-B78AA2A76C90B833 [app] [session-293B20BD29AD4F22] LOG: authentication successful
+3847179312566-7EA4A082DF4C138F [app] [session-293B20BD29AD4F22] [api-post-word] LOG: posting word
+3847179411983-63FCF670D2B7E4BB [app] [session-6F3F79520186E40B] LOG: GET request: "/dictionary-api/all-words"
+3847179412282-BE0774E49FA6E1F3 [app] [session-6F3F79520186E40B] LOG: API request: get-all-words
+3847179412428-A9D19E2EAFEC03D9 [app] [session-6F3F79520186E40B] [api-get-all-words] LOG: fetching words
+3847227482335-C4F36695D187DB3A [app] [session-82F776716EDC1186] LOG: POST request: "/dictionary-api/word"
+3847227482524-72C1F6FBDE17D0BE [app] [session-82F776716EDC1186] LOG: API request: post-word
+3847227482878-C5888BD4787DBC2C [app] [session-82F776716EDC1186] LOG: authentication successful
+3847227482968-2B87562756DB26A5 [app] [session-82F776716EDC1186] [api-post-word] LOG: posting word
+3847227579624-98DCB517B78ABA9A [app] [session-8236AD10CC7ACF83] LOG: GET request: "/dictionary-api/all-words"
+3847227579743-930FA9E1D928C599 [app] [session-8236AD10CC7ACF83] LOG: API request: get-all-words
+3847227579798-200CF97B1BDAFF47 [app] [session-8236AD10CC7ACF83] [api-get-all-words] LOG: fetching words
+3847252839688-F0EB188715BD722E [app] [session-D0EA5D8FE1754B7D] LOG: PUT request: "/dictionary-api/word"
+3847252839945-0224D8DCE9885D2F [app] [session-D0EA5D8FE1754B7D] LOG: API request: put-word
+3847252840264-BDC85D8CDF401D8C [app] [session-D0EA5D8FE1754B7D] LOG: authentication successful
+3847252840484-F7735B79FEAA6A0B [app] [session-D0EA5D8FE1754B7D] [api-put-word] LOG: updating attribute "string"
+3847252840868-21ABA65917783C3A [app] [session-D0EA5D8FE1754B7D] [api-put-word] LOG: updating attribute "type"
+3847252841180-DD30DAB82AD3D4F4 [app] [session-D0EA5D8FE1754B7D] [api-put-word] LOG: updating attribute "description"
+3847252841432-624DD5F3DD1DCCFE [app] [session-D0EA5D8FE1754B7D] [api-put-word] LOG: updating attribute "references"
+3847252849461-3DF4247F6926C78E [app] [session-D0EA5D8FE1754B7D] [api-put-word] LOG: updating attribute "translation"
+3847252943073-52AF2EC7F8DF48B6 [app] [session-3CD23DEEBA7D629A] LOG: GET request: "/dictionary-api/all-words"
+3847252943223-56429A9338E409F6 [app] [session-3CD23DEEBA7D629A] LOG: API request: get-all-words
+3847252943300-A6A999943F528080 [app] [session-3CD23DEEBA7D629A] [api-get-all-words] LOG: fetching words
+3847255300644-B30E0DD0F0ADA815 [app] [session-C45FD802C67C4EFB] LOG: GET request: "/dictionary-api/all-words"
+3847255300757-B1FFFB628BE1E0B3 [app] [session-C45FD802C67C4EFB] LOG: API request: get-all-words
+3847255300805-6BBB37CAFD9F1A70 [app] [session-C45FD802C67C4EFB] [api-get-all-words] LOG: fetching words
+3847345805746-55F4DF7F64BFFA72 [app] [session-C5BC234F66DA7CB3] LOG: POST request: "/dictionary-api/word"
+3847345805853-C879E984E2791570 [app] [session-C5BC234F66DA7CB3] LOG: API request: post-word
+3847345806104-ED1A9620D3DC8DF7 [app] [session-C5BC234F66DA7CB3] LOG: authentication successful
+3847345806208-911A36BD2857D9E4 [app] [session-C5BC234F66DA7CB3] [api-post-word] LOG: posting word
+3847345905161-5E2F57FE0AC14340 [app] [session-9A3DD4D5B9CA169F] LOG: GET request: "/dictionary-api/all-words"
+3847345905276-2C519093744FDBE1 [app] [session-9A3DD4D5B9CA169F] LOG: API request: get-all-words
+3847345905322-10025D56D52D3578 [app] [session-9A3DD4D5B9CA169F] [api-get-all-words] LOG: fetching words
+3847513692075-F9CB2D0A27843450 [app] [session-0265AFAD283B1478] LOG: GET request: "/"
+3847513692188-F7AB9E6737626BB7 [app] [session-0265AFAD283B1478] LOG: sending redirect: "/dictionary"
+3847520456097-C96B8B248CFC0E9E [app] [session-9A00F57239B0BD22] LOG: GET request: "/dictionary"
+3847520456211-040AE1915FDB7689 [app] [session-9A00F57239B0BD22] LOG: sending file: "/root/web/zokadictionary/client/dictionary.html"
+3847760627987-E45B7E59FFBD3582 [app] [session-5F40BC7A429698EF] LOG: GET request: "/dictionary"
+3847760628124-3E5B7C6DB708E512 [app] [session-5F40BC7A429698EF] LOG: sending file: "/root/web/zokadictionary/client/dictionary.html"
+3847760668385-597D2FB91A8FFD6B [app] [session-D6090D2E18F2FBF9] LOG: GET request: "/main.css"
+3847760668480-573259A5A5877E8A [app] [session-D6090D2E18F2FBF9] LOG: sending file: "/root/web/zokadictionary/client/main.css"
+3847760669546-4B54E19AAF96E58B [app] [session-90A4E2980FFB84A3] LOG: GET request: "/dictionary.css"
+3847760669602-0223C2C1E09BA64A [app] [session-90A4E2980FFB84A3] LOG: sending file: "/root/web/zokadictionary/client/dictionary.css"
+3847760670779-581ED1127C7A8109 [app] [session-4B8A3603AFA54545] LOG: GET request: "/dictionary.js"
+3847760670830-F1A07DD4079F4A3D [app] [session-4B8A3603AFA54545] LOG: sending file: "/root/web/zokadictionary/client/dictionary.js"
+3847760717759-5BC5D55C8C86CDF3 [app] [session-FF99505B82A7F10F] LOG: GET request: "/dictionary-api/all-words"
+3847760717853-F38B971105EFFE65 [app] [session-FF99505B82A7F10F] LOG: API request: get-all-words
+3847760717897-6D3A4E18140D9815 [app] [session-FF99505B82A7F10F] [api-get-all-words] LOG: fetching words
+3848064053367-DBCC2D5CF8BDCD94 [app] [session-8AF7E914ABDCA640] LOG: GET request: "/dictionary-api/all-words"
+3848064053480-E4D0A93CFCD9A005 [app] [session-8AF7E914ABDCA640] LOG: API request: get-all-words
+3848064053524-E7910285E371C1E6 [app] [session-8AF7E914ABDCA640] [api-get-all-words] LOG: fetching words
+3848064136570-392BE4BEE34121D5 [app] [session-2CDDD43C56CF43BB] LOG: GET request: "/dictionary-api/all-words"
+3848064136701-5963C9911A742300 [app] [session-2CDDD43C56CF43BB] LOG: API request: get-all-words
+3848064136771-7310A886BB963699 [app] [session-2CDDD43C56CF43BB] [api-get-all-words] LOG: fetching words
+3848095115103-F398803523402F4F [app] [session-C06E6E3DF3C490E3] LOG: GET request: "/dictionary-api/all-words"
+3848095115227-63C36F31B5B366F4 [app] [session-C06E6E3DF3C490E3] LOG: API request: get-all-words
+3848095115285-AF450E22B3195203 [app] [session-C06E6E3DF3C490E3] [api-get-all-words] LOG: fetching words
+3848095165372-8C7E9A1309D9ECB9 [app] [session-0DBFA8EA7EA19C79] LOG: GET request: "/dictionary-api/all-words"
+3848095165464-D6A4B9EB5AC3E2E0 [app] [session-0DBFA8EA7EA19C79] LOG: API request: get-all-words
+3848095165508-89568D2645CEC79A [app] [session-0DBFA8EA7EA19C79] [api-get-all-words] LOG: fetching words
+3848129281175-4C53D59B71268787 [app] [session-6F389BB25BCD5BF2] LOG: GET request: "/dictionary-api/all-words"
+3848129281286-4215374C553F98F9 [app] [session-6F389BB25BCD5BF2] LOG: API request: get-all-words
+3848129281330-A6B0D19B0C4EBC32 [app] [session-6F389BB25BCD5BF2] [api-get-all-words] LOG: fetching words
+3848129334651-B2E6CA37FC00EDF9 [app] [session-F20C116DFD7F8674] LOG: GET request: "/dictionary-api/all-words"
+3848129334747-89E54E370DFA08A7 [app] [session-F20C116DFD7F8674] LOG: API request: get-all-words
+3848129334806-224DFAADDC21255B [app] [session-F20C116DFD7F8674] [api-get-all-words] LOG: fetching words
+3848178807968-5537D026BA77AED6 [app] [session-6F8DB08500C68D5D] LOG: GET request: "/dictionary-api/all-words"
+3848178808131-84483D60D1B7F97E [app] [session-6F8DB08500C68D5D] LOG: API request: get-all-words
+3848178808200-D0343F10F489F615 [app] [session-6F8DB08500C68D5D] [api-get-all-words] LOG: fetching words
+3848178808947-D018625D8FE409D2 [app] [session-8C5CE43FD49FFE55] LOG: GET request: "/dictionary-api/all-words"
+3848178809024-FF34BB224E94EE89 [app] [session-8C5CE43FD49FFE55] LOG: API request: get-all-words
+3848178809077-CAE6B28800A46949 [app] [session-8C5CE43FD49FFE55] [api-get-all-words] LOG: fetching words
+3848619009879-B65745A9D9404298 [app] [session-36CE0EE108E7A96D] LOG: GET request: "/dictionary-api/all-words"
+3848619009983-F91D81A4BB0CF25B [app] [session-36CE0EE108E7A96D] LOG: API request: get-all-words
+3848619010028-DB3FB5F12653B3E7 [app] [session-36CE0EE108E7A96D] [api-get-all-words] LOG: fetching words
+3848888918860-2751D9592CE7C7BC [app] [session-67BB3AE4E42EECA1] LOG: GET request: "/dictionary-api/all-words"
+3848888919048-A53E0FE06085C612 [app] [session-67BB3AE4E42EECA1] LOG: API request: get-all-words
+3848888919103-6ACFACB3BAECFD83 [app] [session-67BB3AE4E42EECA1] [api-get-all-words] LOG: fetching words
+3848949701906-F04F5878128D566C [app] [session-CE77F4100262D788] LOG: POST request: "/dictionary-api/word"
+3848949702036-A3C48B0C63249700 [app] [session-CE77F4100262D788] LOG: API request: post-word
+3848949702384-443FBEB212CCC5CA [app] [session-CE77F4100262D788] LOG: authentication successful
+3848949702472-4EFA3760FFCCC41F [app] [session-CE77F4100262D788] [api-post-word] LOG: posting word
+3848949817555-AE7F0E0C82329A02 [app] [session-3FA68D470FB2B685] LOG: GET request: "/dictionary-api/all-words"
+3848949817676-27CDBDD549A2E9FB [app] [session-3FA68D470FB2B685] LOG: API request: get-all-words
+3848949817732-1149D4D5BEFB7720 [app] [session-3FA68D470FB2B685] [api-get-all-words] LOG: fetching words
+3849061787248-E497CFBE44F07D31 [app] [session-2B680B1989AE01AC] LOG: GET request: "/dictionary"
+3849061787366-9E109DCE2E2A2A47 [app] [session-2B680B1989AE01AC] LOG: sending file: "/root/web/zokadictionary/client/dictionary.html"
+3849061825674-5FBE9B2F0E59076A [app] [session-E7807D2105332731] LOG: GET request: "/dictionary.css"
+3849061825776-946B7395A2EBA396 [app] [session-E7807D2105332731] LOG: sending file: "/root/web/zokadictionary/client/dictionary.css"
+3849061827660-4DEEA7D02FF5FE6D [app] [session-2AAEE6CF04B3C78A] LOG: GET request: "/dictionary.js"
+3849061827741-8E0CA3E2D4518005 [app] [session-2AAEE6CF04B3C78A] LOG: sending file: "/root/web/zokadictionary/client/dictionary.js"
+3849061828328-AC2580E3C8F54659 [app] [session-37B43832D709F669] LOG: GET request: "/main.css"
+3849061828382-E87E3546D1298D6D [app] [session-37B43832D709F669] LOG: sending file: "/root/web/zokadictionary/client/main.css"
+3849061874019-891BEDFD73064517 [app] [session-F228CD9AA4F83D23] LOG: GET request: "/dictionary-api/all-words"
+3849061874126-6A2FF96E2E6B7504 [app] [session-F228CD9AA4F83D23] LOG: API request: get-all-words
+3849061874171-4970B4EEFA589FB6 [app] [session-F228CD9AA4F83D23] [api-get-all-words] LOG: fetching words
+3849665448076-2F1EEF08E3C71D28 [app] [session-0B8B4ED1C6E47DF9] LOG: GET request: "/dictionary"
+3849665448205-EA411964539F4EDF [app] [session-0B8B4ED1C6E47DF9] LOG: sending file: "/root/web/zokadictionary/client/dictionary.html"
+3849665517049-62E578E7BDF01B00 [app] [session-F0B34DEDB3AB0EB8] LOG: GET request: "/main.css"
+3849665517163-B956D6D52025F702 [app] [session-F0B34DEDB3AB0EB8] LOG: sending file: "/root/web/zokadictionary/client/main.css"
+3849665520203-512774F1402529B5 [app] [session-00876D6970008416] LOG: GET request: "/dictionary.css"
+3849665520263-53B9AEE854BA176E [app] [session-00876D6970008416] LOG: sending file: "/root/web/zokadictionary/client/dictionary.css"
+3849665523657-6467C85119746667 [app] [session-B8E6DAA3CA894E94] LOG: GET request: "/dictionary.js"
+3849665523720-98C21A07606B7436 [app] [session-B8E6DAA3CA894E94] LOG: sending file: "/root/web/zokadictionary/client/dictionary.js"
+3849665559021-B2B8B6C12DC9BA2E [app] [session-E8181778BAFFC533] LOG: GET request: "/dictionary-api/all-words"
+3849665559124-0B40A730E244FBA4 [app] [session-E8181778BAFFC533] LOG: API request: get-all-words
+3849665559169-17484FE8BCDDD30B [app] [session-E8181778BAFFC533] [api-get-all-words] LOG: fetching words
+3849694844401-AC48A25E66A67D11 [app] [session-DCD11A6E59444308] LOG: GET request: "/dictionary"
+3849694844557-50CF0FD133FD2A51 [app] [session-DCD11A6E59444308] LOG: sending file: "/root/web/zokadictionary/client/dictionary.html"
+3849694899000-6AFE9D2750295379 [app] [session-3F290598C31FAA77] LOG: GET request: "/main.css"
+3849694899145-BE20523F4F3FD2E3 [app] [session-3F290598C31FAA77] LOG: sending file: "/root/web/zokadictionary/client/main.css"
+3849694905484-46B84F9A8E75ED81 [app] [session-EF8E92EA48234BE5] LOG: GET request: "/dictionary.css"
+3849694905559-ACDF26428140749D [app] [session-EF8E92EA48234BE5] LOG: sending file: "/root/web/zokadictionary/client/dictionary.css"
+3849694909244-526273E3633162D3 [app] [session-AABA389F62FB4D58] LOG: GET request: "/dictionary.js"
+3849694909304-734DCC39A4074401 [app] [session-AABA389F62FB4D58] LOG: sending file: "/root/web/zokadictionary/client/dictionary.js"
+3849694946020-ED8683CE1EE7C31C [app] [session-6E24839CE4F92BF8] LOG: GET request: "/dictionary-api/all-words"
+3849694946152-6DCA89C0113D2631 [app] [session-6E24839CE4F92BF8] LOG: API request: get-all-words
+3849694946193-3C652C2E47509D14 [app] [session-6E24839CE4F92BF8] [api-get-all-words] LOG: fetching words

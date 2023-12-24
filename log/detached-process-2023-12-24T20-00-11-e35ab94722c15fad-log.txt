@@ -1,0 +1,27 @@
+3944330687482-142ABEFD9FA11BD2 [app] LOG: importing modules
+3944330766574-3AB703D3D796D20A [app] LOG: starting database
+3944330826441-B563D4F77A45EFFE [app] [db-init] LOG: successfully connected to database
+3944330826614-3A6E23E8E58D92FC [app] [db-init] LOG: running setup for db-type 'word'
+3944330827266-5B5FFC08C5E7BED4 [app] [db-init] [db-word-setup] LOG: table "Word" exists
+3944330827512-1290255354ED0AF1 [app] [db-init] [db-word-setup] LOG: table "Reference" exists
+3944330827694-32F204CD02DCD39D [app] [db-init] [db-word-setup] LOG: table "Translation" exists
+3944330827776-E98A881C02DAF82B [app] [db-init] LOG: successfully created database
+3944330828210-4D8FFFBC71F482EB [app] LOG: setup done
+3944330830737-D81FB70A0EB4B9E4 [app] [server] LOG: listening on port 2718
+3945123655943-BECD8D020148C4D0 [app] [session-7CB97922A5544556] LOG: GET request: "/"
+3945123656189-957040F7B29347D3 [app] [session-7CB97922A5544556] LOG: sending redirect: "/dictionary"
+3945123868172-79D6688C628B4FC7 [app] [session-D35F9FE16DE9FCC4] LOG: GET request: "/dictionary"
+3945123868409-3704BD994BA1D1DF [app] [session-D35F9FE16DE9FCC4] LOG: sending file: "/root/web/zokadictionary/client/dictionary.html"
+3945124081636-47032A619BB21C74 [app] [session-E3D643150FEFF132] LOG: GET request: "/main.css"
+3945124081857-26430C7B700C0DB3 [app] [session-E3D643150FEFF132] LOG: sending file: "/root/web/zokadictionary/client/main.css"
+3945124141587-9A41B61DD8D77AB6 [app] [session-D9D79B5DA7538B6E] LOG: GET request: "/dictionary.css"
+3945124141721-D6DE73B67F7DE9BE [app] [session-D9D79B5DA7538B6E] LOG: sending file: "/root/web/zokadictionary/client/dictionary.css"
+3945124143877-CC8678A567DE41A5 [app] [session-EA508F3904C16A9C] LOG: GET request: "/dictionary.js"
+3945124143947-FF450490F768D3E1 [app] [session-EA508F3904C16A9C] LOG: sending file: "/root/web/zokadictionary/client/dictionary.js"
+3945124553565-6A9069B9CB4DAAF8 [app] [session-B30B3B68A51973DD] LOG: GET request: "/dictionary-api/all-words"
+3945124553760-48FF9D228E8C57E2 [app] [session-B30B3B68A51973DD] LOG: API request: get-all-words
+3945124553896-56810DDFC4E3CC8C [app] [session-B30B3B68A51973DD] [api-get-all-words] LOG: fetching words
+3946519620562-0DC318012523AA0E [app] [session-B89214276DAD3B9C] LOG: GET request: "/"
+3946519620683-4DA4F8106F995A0E [app] [session-B89214276DAD3B9C] LOG: sending redirect: "/dictionary"
+3946519707073-2B29C3854B840156 [app] [session-648C9F7CE5408822] LOG: GET request: "/dictionary"
+3946519707257-733F642817B4F3E7 [app] [session-648C9F7CE5408822] LOG: sending file: "/root/web/zokadictionary/client/dictionary.html"

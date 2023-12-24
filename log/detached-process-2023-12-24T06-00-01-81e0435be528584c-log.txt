@@ -1,0 +1,16 @@
+3893921079126-790401B86A6D4DCE [app] LOG: importing modules
+3893921368612-889A87A0A1FCA270 [app] LOG: starting database
+3893921487942-6CF2D031B40A386E [app] [db-init] LOG: successfully connected to database
+3893921488237-87BCD2E6ED8B9F10 [app] [db-init] LOG: running setup for db-type 'word'
+3893921490577-8EBECDB10DB6AD41 [app] [db-init] [db-word-setup] LOG: table "Word" exists
+3893921490891-361EF90114D4D7B5 [app] [db-init] [db-word-setup] LOG: table "Reference" exists
+3893921491153-4B1D7C74FDF98343 [app] [db-init] [db-word-setup] LOG: table "Translation" exists
+3893921491267-CADFFFA7DEEE6E48 [app] [db-init] LOG: successfully created database
+3893921491748-D3C4CA77B2A70886 [app] LOG: setup done
+3893921494853-F1D5956D405B69AF [app] [server] LOG: listening on port 2718
+3896349931678-1C62EA73DB010E28 [app] [session-59EB05BB21740D9B] LOG: GET request: "/"
+3896349931996-F3B35BB74ED85291 [app] [session-59EB05BB21740D9B] LOG: sending redirect: "/dictionary"
+3896350598583-75C52C0C599662DE [app] [session-3D755B6381AA5ED3] LOG: GET request: "/"
+3896350598722-8B92C75FE7A35982 [app] [session-3D755B6381AA5ED3] LOG: sending redirect: "/dictionary"
+3896350977139-E13235F55DE52FC7 [app] [session-56BDBDDCF73FC805] LOG: GET request: "/dictionary"
+3896350977374-3126239140399611 [app] [session-56BDBDDCF73FC805] LOG: sending file: "/root/web/zokadictionary/client/dictionary.html"

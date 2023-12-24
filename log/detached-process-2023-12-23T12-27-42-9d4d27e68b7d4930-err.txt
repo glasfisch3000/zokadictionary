@@ -1,0 +1,22 @@
+node:internal/fs/sync:78
+  return binding.openSync(
+                 ^
+
+Error: ENOENT: no such file or directory, open '/root/web/zokadictionary/security/key.txt'
+    at Object.open (node:internal/fs/sync:78:18)
+    at Object.openSync (node:fs:565:17)
+    at Object.readFileSync (node:fs:445:35)
+    at Object.<anonymous> (/root/web/zokadictionary/security/key.js:3:21)
+    at Module._compile (node:internal/modules/cjs/loader:1241:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1295:10)
+    at Module.load (node:internal/modules/cjs/loader:1091:32)
+    at Module._load (node:internal/modules/cjs/loader:938:12)
+    at Module.require (node:internal/modules/cjs/loader:1115:19)
+    at require (node:internal/modules/helpers:130:18) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/root/web/zokadictionary/security/key.txt'
+}
+
+Node.js v20.9.0

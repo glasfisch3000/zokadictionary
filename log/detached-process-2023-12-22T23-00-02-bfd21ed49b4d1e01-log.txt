@@ -1,0 +1,10 @@
+3782321824420-9FDB15E8D0CB93DA [app] LOG: importing modules
+3782321999061-D11145A9709CBE83 [app] LOG: starting database
+3782322088552-D7AA95E175DED978 [app] [db-init] LOG: successfully connected to database
+3782322088713-81F96D47794933D5 [app] [db-init] LOG: running setup for db-type 'word'
+3782322089402-C60D628693B13BF8 [app] [db-init] [db-word-setup] LOG: table "Word" exists
+3782322095097-1534DD81D897685A [app] [db-init] [db-word-setup] LOG: table "Reference" exists
+3782322095323-59929524FE862D12 [app] [db-init] [db-word-setup] LOG: table "Translation" exists
+3782322095415-B44A1AC3A9603DAC [app] [db-init] LOG: successfully created database
+3782322095795-967B255493F6642A [app] LOG: setup done
+3782322098326-56A13F5C6379223B [app] [server] LOG: listening on port 2718

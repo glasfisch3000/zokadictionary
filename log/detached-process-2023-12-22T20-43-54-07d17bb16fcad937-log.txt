@@ -1,0 +1,13 @@
+3774153615519-CADF4AC09ED4D2EE [app] LOG: importing modules
+3774153721868-1EA3B60E6FDC0BD9 [app] LOG: starting database
+3774153871620-3EABEB5310608E1A [app] [db-init] LOG: successfully connected to database
+3774153871906-10960E4CE600970D [app] [db-init] LOG: running setup for db-type 'word'
+3774153876481-E0E3C060714FBCA5 [app] [db-init] [db-word-setup] LOG: table "Word" exists
+3774153876784-AA975B62630C6BDF [app] [db-init] [db-word-setup] LOG: table "Reference" exists
+3774153877010-32F9F55A50E47F60 [app] [db-init] [db-word-setup] LOG: table "Translation" exists
+3774153877124-2DA26B571CA4FFCB [app] [db-init] LOG: successfully created database
+3774153877623-194FA4A13C2C8A42 [app] LOG: setup done
+3774153880969-0B40AA31EAA05795 [app] [server] LOG: listening on port 2718
+3774155737678-EC60B0ADA9F51543 [app] [session-05546FA53D9953A0] LOG: GET request: "/dictionary"
+3774155738006-A4B252E5A289DBC5 [app] LOG: sending client file: "dictionary.html"
+[server][client] Error: ENOENT: no such file or directory, open './client/html/dictionary.html'
