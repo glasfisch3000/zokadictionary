@@ -52,6 +52,10 @@
   color: #888;
 }
 
+#words-section-other.words-section-empty {
+  display: none;
+}
+
 .word, .search-word {
   margin-top: 10px;
   margin-bottom: 10px;
