@@ -222,7 +222,7 @@ searchField.oninput = () => {
     element.appendChild(value)
 
     if(word.match.pattern == "string") {
-      value.innerHTML = word.string.substring(0, word.match.index) + `<span class="search-word-match">${searchValue}</span>` + word.string.substring(word.match.index + searchValue.length, word.string.length)
+      value.innerHTML = word.string.substring(0, word.match.index) + `<span class="search-word-match">${word.string.substring(word.match.index, word.match.index + searchValue.length)}</span>` + word.string.substring(word.match.index + searchValue.length, word.string.length)
     } else {
       value.innerHTML = word.string
     }
@@ -251,7 +251,7 @@ searchField.oninput = () => {
       translations.appendChild(item)
 
       if(word.match.pattern == "translation" && word.match.i == index) {
-        item.innerHTML = translation.substring(0, word.match.index) + `<span class="search-word-match">${searchValue}</span>` + translation.substring(word.match.index + searchValue.length, translation.length)
+        item.innerHTML = translation.substring(0, word.match.index) + `<span class="search-word-match">${translation.substring(word.match.index, word.match.index + searchValue.length)}</span>` + translation.substring(word.match.index + searchValue.length, translation.length)
       } else {
         item.innerHTML = translation
       }
@@ -262,13 +262,13 @@ searchField.oninput = () => {
 function searchMatch(search, word) {
   let result = null
 
-  const matchIndex = word.string.indexOf(search)
+  const matchIndex = word.string.toLowerCase().indexOf(search.toLowerCase())
   if(matchIndex != -1) result = { pattern: "string", index: matchIndex }
 
   for(const i in word.translations) {
     const translation = word.translations[i]
 
-    const matchIndex = translation.indexOf(search)
+    const matchIndex = translation.toLowerCase().indexOf(search.toLowerCase())
     if(matchIndex != -1) {
       if(!result || result.matchIndex > matchIndex) {
         result = { pattern: "translation", i: i, index: matchIndex }
