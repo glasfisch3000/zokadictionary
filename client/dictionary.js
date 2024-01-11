@@ -111,7 +111,6 @@ fetch("/dictionary-api/all-words", { method: "GET" }) // get list of all words f
     for(const wordElement of wordElements) {
       sortWordElement(wordElement, letters, results)
     }
-    letters.sort()
     letters.reverse()
     letters.push("other")
 
