@@ -1,0 +1,27 @@
+{
+  "name": "zokadictionary",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glasfisch3000/zokadictionary.git"
+  },
+  "author": "Jakob Danckwerts",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/glasfisch3000/zokadictionary/issues"
+  },
+  "homepage": "https://github.com/glasfisch3000/zokadictionary#readme",
+  "dependencies": {
+    "@noble/ed25519": "^2.0.0",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "sqlite": "^5.0.1",
+    "sqlite-async": "^1.2.0",
+    "sqlite3": "^5.1.6"
+  }
+}
