@@ -1,10 +1,10 @@
-const sessionID = require(__dirname + "/sessionid.js")
+import { sessionID } from "./sessionid.mjs"
 
-module.exports = (environment) => {
+export function logger(environment) {
   return {
     log: (message) => { _log(environment, "LOG", message) },
     err: (message) => { _log(environment, "ERROR", message) },
-    childLogger: (child) => { return module.exports((environment || []).concat([`${child}`])) },
+    childLogger: (child) => { return logger((environment || []).concat([`${child}`])) },
   }
 }
 

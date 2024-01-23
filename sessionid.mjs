@@ -1,6 +1,7 @@
-const crypto = require("crypto")
+import e from "express";
+import * as crypto from "node:crypto"
 
-module.exports = () => {
+export function sessionID() {
   const randomBuffer = new Uint32Array(2);
   crypto.getRandomValues(randomBuffer);
 

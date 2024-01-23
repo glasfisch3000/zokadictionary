@@ -1,25 +1,28 @@
-const { log, err, childLogger } = require("./logging.js")(["app"])
+import { logger } from "./logging.mjs"
+const { log, err, childLogger } = logger(["app"])
 
 log("importing modules")
-const server = require("./server.js")
-const api = require("./api.js")
-const security = require("./security/security.js")
+import * as server from "./server.mjs"
+import * as api from "./api.mjs"
+import * as security from "./security/security.mjs"
+import { init as initDB } from "./db/database.mjs"
+import { Word } from "./db/word.mjs"
 
 log("starting database")
-require("./db/database.js")(childLogger).then(data => { // actual database pointer
+initDB(childLogger).then(data => { // actual database pointer
   log("setup done")
 
-  server.getFile("/main.css", __dirname + "/client/main.css", childLogger)
-  server.getFile("/dictionary.css", __dirname + "/client/dictionary.css", childLogger)
-  server.getFile("/dictionary.js", __dirname + "/client/dictionary.js", childLogger)
+  server.GETFile("/main.css", "./client/main.css", childLogger)
+  server.GETFile("/dictionary.css", "./client/dictionary.css", childLogger)
+  server.GETFile("/dictionary.js", "./client/dictionary.js", childLogger)
 
-  server.getRedirect("/", "/dictionary", childLogger)
-  server.getRedirect("/index", "/dictionary", childLogger)
-  server.getRedirect("/index.html", "/dictionary", childLogger)
-  server.getRedirect("/dictionary.html", "/dictionary", childLogger)
-  server.getFile("/dictionary", __dirname + "/client/dictionary.html", childLogger)
+  server.GETRedirect("/", "/dictionary", childLogger)
+  server.GETRedirect("/index", "/dictionary", childLogger)
+  server.GETRedirect("/index.html", "/dictionary", childLogger)
+  server.GETRedirect("/dictionary.html", "/dictionary", childLogger)
+  server.GETFile("/dictionary", "./client/dictionary.html", childLogger)
 
-  server.get("/dictionary-api/all-words", childLogger, async (req, res, log, err, childLogger) => {
+  server.GET("/dictionary-api/all-words", childLogger, async (req, res, log, err, childLogger) => {
     log("API request: get-all-words")
 
     try {
@@ -42,7 +45,7 @@ require("./db/database.js")(childLogger).then(data => { // actual database point
     }
   })
 
-  server.get("/dictionary-api/word", childLogger, async (req, res, log, err, childLogger) => {
+  server.GET("/dictionary-api/word", childLogger, async (req, res, log, err, childLogger) => {
     log("API request: get-word")
 
     try {
@@ -116,7 +119,6 @@ require("./db/database.js")(childLogger).then(data => { // actual database point
       }
 
       // construct word with new information
-      const { Word } = require("./db/db-types.js").word
       const word = new Word(0, string, type, description, references || null, translations || null)
 
       // update word in db
@@ -133,8 +135,8 @@ require("./db/database.js")(childLogger).then(data => { // actual database point
     }
   }
 
-  server.get("/dictionary-api/post-word", childLogger, postWord)
-  server.post("/dictionary-api/word", childLogger, postWord)
+  server.GET("/dictionary-api/post-word", childLogger, postWord)
+  server.POST("/dictionary-api/word", childLogger, postWord)
 
   const putWord = async (req, res, log, err, childLogger) => {
     log("API request: put-word")
@@ -179,7 +181,6 @@ require("./db/database.js")(childLogger).then(data => { // actual database point
       }
 
       // construct word with new information
-      const { Word } = require("./db/db-types.js").word
       const word = new Word(id, string || null, type, description, references || null, translations || null)
 
       // update word in db
@@ -196,8 +197,8 @@ require("./db/database.js")(childLogger).then(data => { // actual database point
     }
   }
 
-  server.get("/dictionary-api/put-word", childLogger, putWord)
-  server.put("/dictionary-api/word", childLogger, putWord)
+  server.GET("/dictionary-api/put-word", childLogger, putWord)
+  server.PUT("/dictionary-api/word", childLogger, putWord)
 
   const deleteWord = async (req, res, log, err, childLogger) => {
     log("API request: delete-word")
@@ -240,8 +241,8 @@ require("./db/database.js")(childLogger).then(data => { // actual database point
     }
   }
 
-  server.get("/dictionary-api/delete-word", childLogger, deleteWord)
-  server.delete("/dictionary-api/word", childLogger, deleteWord)
+  server.GET("/dictionary-api/delete-word", childLogger, deleteWord)
+  server.DELETE("/dictionary-api/word", childLogger, deleteWord)
 
   server.start(childLogger)
 })

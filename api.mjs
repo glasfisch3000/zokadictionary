@@ -1,11 +1,11 @@
-const db = require("./db/db-types.js")
+import * as wordsDB from "./db/word.mjs"
 
-module.exports.getAllWords = async (data, logger) => {
+export async function getAllWords(data, logger) {
   const { log, err, childLogger } = logger("api-get-all-words")
 
   try {
     log("fetching words")
-    var words = await db.word.getAll(data, childLogger)
+    var words = await wordsDB.getAllWords(data, childLogger)
 
     if(!words) {
       err("no words found")
@@ -19,12 +19,12 @@ module.exports.getAllWords = async (data, logger) => {
   }
 }
 
-module.exports.getWord = async (data, logger, id) => {
+export async function getWord(data, logger, id) {
   const { log, err, childLogger } = logger("api-get-word")
 
   try {
     log("fetching word")
-    var word = await db.word.get(data, childLogger, id)
+    var word = await wordsDB.getWord(data, childLogger, id)
 
     if(!word) {
       err("no content found")
@@ -38,12 +38,12 @@ module.exports.getWord = async (data, logger, id) => {
   }
 }
 
-module.exports.postWord = async (data, logger, word) => {
+export async function postWord(data, logger, word) {
   const { log, err, childLogger } = logger("api-post-word")
 
   try {
     log("posting word")
-    let result = await db.word.create(data, childLogger, word)
+    let result = await wordsDB.createWord(data, childLogger, word)
     
     if(!result) {
       err("word could not be created")
@@ -57,14 +57,14 @@ module.exports.postWord = async (data, logger, word) => {
   }
 }
 
-module.exports.putWord = async (data, logger, word) => {
+export async function putWord(data, logger, word) {
   const { log, err, childLogger } = logger("api-put-word")
 
   try {
     if(word.string) {
       log(`updating attribute "string"`)
 
-      let result = await db.word.updateString(data, childLogger, word.id, word.string)
+      let result = await wordsDB.updateWordString(data, childLogger, word.id, word.string)
       if(!result) {
         err(`attribute "string" could not be updated`)
         return false
@@ -74,7 +74,7 @@ module.exports.putWord = async (data, logger, word) => {
     if(word.type || word.type === "") {
       log(`updating attribute "type"`)
 
-      let result = await db.word.updateType(data, childLogger, word.id, word.type)
+      let result = await wordsDB.updateWordType(data, childLogger, word.id, word.type)
       if(!result) {
         err(`attribute "type" could not be updated`)
         return false
@@ -84,7 +84,7 @@ module.exports.putWord = async (data, logger, word) => {
     if(word.description || word.description === "") {
       log(`updating attribute "description"`)
 
-      let result = await db.word.updateDescription(data, childLogger, word.id, word.description)
+      let result = await wordsDB.updateWordDescription(data, childLogger, word.id, word.description)
       if(!result) {
         err(`attribute "description" could not be updated`)
         return false
@@ -94,7 +94,7 @@ module.exports.putWord = async (data, logger, word) => {
     if(word.references) {
       log(`updating attribute "references"`)
 
-      let result = await db.word.updateReferences(data, childLogger, word.id, word.references)
+      let result = await wordsDB.updateWordReferences(data, childLogger, word.id, word.references)
       if(!result) {
         err(`attribute "references" could not be updated`)
         return false
@@ -104,7 +104,7 @@ module.exports.putWord = async (data, logger, word) => {
     if(word.translations) {
       log(`updating attribute "translation"`)
 
-      let result = await db.word.updateTranslations(data, childLogger, word.id, word.translations)
+      let result = await wordsDB.updateWordTranslations(data, childLogger, word.id, word.translations)
       if(!result) {
         err(`attribute "translations" could not be updated`)
         return false
@@ -118,12 +118,12 @@ module.exports.putWord = async (data, logger, word) => {
   }
 }
 
-module.exports.deleteWord = async (data, logger, word) => {
+export async function deleteWord(data, logger, word) {
   const { log, err, childLogger } = logger("api-delete-word")
 
   try {
     log("deleting word")
-    let result = await db.word.delete(data, childLogger, word)
+    let result = await wordsDB.deleteWord(data, childLogger, word)
     
     if(!result) {
       err("word could not be deleted")

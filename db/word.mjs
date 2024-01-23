@@ -1,4 +1,4 @@
-class Word {
+export class Word {
   constructor(id, string, type, description, references, translations) {
     this.id = id
     this.string = string
@@ -9,11 +9,7 @@ class Word {
   }
 }
 
-module.exports.name = "word"
-
-module.exports.Word = Word
-
-module.exports.setup = async (db, logger) => {
+export async function setup(db, logger) {
   const { log, err, childLogger } = logger("db-word-setup")
 
   await db.run("CREATE TABLE IF NOT EXISTS Word (id INTEGER PRIMARY KEY AUTOINCREMENT, string TEXT, type TEXT, description TEXT)")
@@ -24,7 +20,7 @@ module.exports.setup = async (db, logger) => {
   log(`table "Translation" exists`)
 }
 
-module.exports.get = async (db, logger, id) => {
+export async function getWord(db, logger, id) {
   const { log, err, childLogger } = logger("db-word-get")
 
   try {
@@ -84,7 +80,7 @@ async function getWordTranslations(db, log, err, id) {
   return result
 }
 
-module.exports.getAll = async (db, logger) => {
+export async function getAllWords(db, logger) {
   const { log, err, childLogger } = logger("db-word-getAll")
 
   try {
@@ -117,7 +113,7 @@ module.exports.getAll = async (db, logger) => {
   }
 }
 
-module.exports.create = async (db, logger, word) => {
+export async function createWord(db, logger, word) {
   const { log, err, childLogger } = logger("db-word-create")
 
   try {
@@ -166,7 +162,7 @@ module.exports.create = async (db, logger, word) => {
   }
 }
 
-module.exports.updateString = async (db, logger, id, string) => {
+export async function updateWordString(db, logger, id, string) {
   const { log, err, childLogger } = logger("db-word-update-string")
 
   try {
@@ -194,7 +190,7 @@ module.exports.updateString = async (db, logger, id, string) => {
   }
 }
 
-module.exports.updateType = async (db, logger, id, type) => {
+export async function updateWordType(db, logger, id, type) {
   const { log, err, childLogger } = logger("db-word-update-type")
 
   try {
@@ -222,7 +218,7 @@ module.exports.updateType = async (db, logger, id, type) => {
   }
 }
 
-module.exports.updateDescription = async (db, logger, id, description) => {
+export async function updateWordDescription(db, logger, id, description) {
   const { log, err, childLogger } = logger("db-word-update-description")
 
   try {
@@ -250,7 +246,7 @@ module.exports.updateDescription = async (db, logger, id, description) => {
   }
 }
 
-module.exports.updateReferences = async (db, logger, id, references) => {
+export async function updateWordReferences(db, logger, id, references) {
   const { log, err, childLogger } = logger("db-word-update-references")
 
   try {
@@ -293,7 +289,7 @@ module.exports.updateReferences = async (db, logger, id, references) => {
   }
 }
 
-module.exports.updateTranslations = async (db, logger, id, translations) => {
+export async function updateWordTranslations(db, logger, id, translations) {
   const { log, err, childLogger } = logger("db-word-update-translations")
 
   try {
@@ -335,7 +331,7 @@ module.exports.updateTranslations = async (db, logger, id, translations) => {
   }
 }
 
-module.exports.delete = async (db, logger, id) => {
+export async function deleteWord(db, logger, id) {
   const { log, err, childLogger } = logger("db-word-delete")
 
   try {

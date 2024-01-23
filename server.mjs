@@ -1,13 +1,16 @@
-const sessionID = require("./sessionid.js")
+import { sessionID } from "./sessionid.mjs"
 
-const express = require("express")
+import express from "express"
+import { Server as HTTPServer } from "node:http"
+import bodyParser from "body-parser"
+
 const server = express()
-server.use(require("body-parser").urlencoded({ extended: false }))
+server.use(bodyParser.urlencoded({ extended: false }))
 
-const http = require("http").Server(server)
+const http = HTTPServer(server)
 const port = 80
 
-module.exports.get = (path, logger, callback) => {
+export function GET(path, logger, callback) {
   server.get(path, (req, res) => {
     const { log, err, childLogger } = logger(`session-${sessionID()}`)
 
@@ -16,7 +19,7 @@ module.exports.get = (path, logger, callback) => {
   })
 }
 
-module.exports.getFile = (path, file, logger) => {
+export function GETFile(path, file, logger) {
   server.get(path, (req, res) => {
     const { log, err, childLogger } = logger(`session-${sessionID()}`)
 
@@ -26,7 +29,7 @@ module.exports.getFile = (path, file, logger) => {
   })
 }
 
-module.exports.getRedirect = (path, newPath, logger) => {
+export function GETRedirect(path, newPath, logger) {
   server.get(path, (req, res) => {
     const { log, err, childLogger } = logger(`session-${sessionID()}`)
 
@@ -36,7 +39,7 @@ module.exports.getRedirect = (path, newPath, logger) => {
   })
 }
 
-module.exports.post = (path, logger, callback) => {
+export function POST(path, logger, callback) {
   server.post(path, (req, res) => {
     const { log, err, childLogger } = logger(`session-${sessionID()}`)
 
@@ -45,7 +48,7 @@ module.exports.post = (path, logger, callback) => {
   })
 }
 
-module.exports.put = (path, logger, callback) => {
+export function PUT(path, logger, callback) {
   server.put(path, (req, res) => {
     const { log, err, childLogger } = logger(`session-${sessionID()}`)
 
@@ -54,7 +57,7 @@ module.exports.put = (path, logger, callback) => {
   })
 }
 
-module.exports.delete = (path, logger, callback) => {
+export function DELETE(path, logger, callback) {
   server.delete(path, (req, res) => {
     const { log, err, childLogger } = logger(`session-${sessionID()}`)
 
@@ -63,7 +66,7 @@ module.exports.delete = (path, logger, callback) => {
   })
 }
 
-module.exports.start = (logger) => {
+export function start(logger) {
   http.listen(port, () => {
     logger("server").log("listening on port " + port)
   })

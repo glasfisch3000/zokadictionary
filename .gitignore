@@ -139,3 +139,4 @@ log
 
 # private security data
 security/key.txt
+security/keys.json
