@@ -3,12 +3,14 @@ import { sessionID } from "./sessionid.mjs"
 import express from "express"
 import { Server as HTTPServer } from "node:http"
 import bodyParser from "body-parser"
+import { promises as fs } from "node:fs"
 
 const server = express()
 server.use(bodyParser.urlencoded({ extended: false }))
 
 const http = HTTPServer(server)
-const port = 80
+
+const port = parseInt(await fs.readFile("./port.txt"))
 
 export function GET(path, logger, callback) {
   server.get(path, (req, res) => {
