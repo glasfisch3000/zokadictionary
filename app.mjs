@@ -8,19 +8,23 @@ import * as security from "./security/security.mjs"
 import { init as initDB } from "./db/database.mjs"
 import { Word } from "./db/word.mjs"
 
+import { dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
+const dirname = dirname(fileURLToPath(import.meta.url))
+
 log("starting database")
 initDB(childLogger).then(data => { // actual database pointer
   log("setup done")
 
-  server.GETFile("/main.css", "./client/main.css", childLogger)
-  server.GETFile("/dictionary.css", "./client/dictionary.css", childLogger)
-  server.GETFile("/dictionary.js", "./client/dictionary.js", childLogger)
+  server.GETFile("/main.css", dirname + "/client/main.css", childLogger)
+  server.GETFile("/dictionary.css", dirname + "/client/dictionary.css", childLogger)
+  server.GETFile("/dictionary.js", dirname + "/client/dictionary.js", childLogger)
 
   server.GETRedirect("/", "/dictionary", childLogger)
   server.GETRedirect("/index", "/dictionary", childLogger)
   server.GETRedirect("/index.html", "/dictionary", childLogger)
   server.GETRedirect("/dictionary.html", "/dictionary", childLogger)
-  server.GETFile("/dictionary", "./client/dictionary.html", childLogger)
+  server.GETFile("/dictionary", dirname + "/client/dictionary.html", childLogger)
 
   server.GET("/dictionary-api/all-words", childLogger, async (req, res, log, err, childLogger) => {
     log("API request: get-all-words")

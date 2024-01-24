@@ -1,4 +1,3 @@
-import e from "express";
 import * as crypto from "node:crypto"
 
 export function sessionID() {

@@ -5,12 +5,16 @@ import { Server as HTTPServer } from "node:http"
 import bodyParser from "body-parser"
 import { promises as fs } from "node:fs"
 
+import { dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
+const dirname = dirname(fileURLToPath(import.meta.url))
+
 const server = express()
 server.use(bodyParser.urlencoded({ extended: false }))
 
 const http = HTTPServer(server)
 
-const port = parseInt(await fs.readFile("./port.txt"))
+const port = parseInt(await fs.readFile(dirname + "/port.txt"))
 
 export function GET(path, logger, callback) {
   server.get(path, (req, res) => {
