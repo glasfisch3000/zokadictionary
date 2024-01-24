@@ -4,9 +4,9 @@ import { Database } from "sqlite-async"
 
 import { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-const dirname = dirname(fileURLToPath(import.meta.url))
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
-const dbFile = dirname + "/../data/database.db"
+const dbFile = __dirname + "/../data/database.db"
 
 export async function init(logger) {
   const { log, err, childLogger } = logger("db-init")
